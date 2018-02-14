@@ -1,11 +1,10 @@
-package com.example.jorge.myappacerta.Products;
+package com.example.jorge.myappacerta.products;
 
 import android.support.annotation.NonNull;
 
 import com.example.jorge.myappacerta.data.ProductServiceApi;
 import com.example.jorge.myappacerta.data.model.ListProduct;
 import com.example.jorge.myappacerta.data.model.Product;
-import com.example.jorge.myappacerta.data.model.ProductResultSearch;
 
 /**
  * Created by jorge on 14/02/2018.

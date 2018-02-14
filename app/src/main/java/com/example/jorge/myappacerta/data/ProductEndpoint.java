@@ -2,9 +2,6 @@ package com.example.jorge.myappacerta.data;
 
 import com.example.jorge.myappacerta.data.model.ListProduct;
 import com.example.jorge.myappacerta.data.model.Product;
-import com.example.jorge.myappacerta.data.model.ProductResultSearch;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

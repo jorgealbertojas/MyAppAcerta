@@ -1,4 +1,4 @@
-package com.example.jorge.myappacerta.Products;
+package com.example.jorge.myappacerta.products;
 
 import android.support.annotation.NonNull;
 

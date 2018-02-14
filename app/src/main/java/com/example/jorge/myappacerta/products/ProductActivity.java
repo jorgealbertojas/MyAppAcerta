@@ -1,4 +1,4 @@
-package com.example.jorge.myappacerta.Products;
+package com.example.jorge.myappacerta.products;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
