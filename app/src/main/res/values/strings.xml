@@ -1,3 +1,24 @@
 <resources>
-    <string name="app_name">MyAppAcerta</string>
+    <string name="app_name">MyTestApp</string>
+    <string name="empty_task_message">Shopping cannot be empty</string>
+
+    <string name="add_purchase">New Purchase</string>
+    <string name="edit_purchase">Edit Purchase</string>
+
+    <string name="purchase_marked_complete">Purchase marked complete</string>
+    <string name="purchase_marked_active">Purchase marked active</string>
+    <string name="loading_purchase_error">Purchase while loading tasks</string>
+    <string name="completed_purchase_cleared">Completed Purchase cleared</string>
+    <string name="no_shopping_all">You have no Purchase!</string>
+    <string name="no_shopping_active">You have no Purchase!</string>
+    <string name="no_shopping_completed">You have no list Purchase!</string>
+
+    <string name="loading">LOADING</string>
+    <string name="menu_delete_purchase">Delete purchase</string>
+
+
+    <string name="no_shopping_add">Add a purchase item +</string>
+
+    <string name="add_quantity">Put the quantity</string>
+
 </resources>
