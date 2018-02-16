@@ -82,7 +82,7 @@
         <EditText
             android:id="@+id/et_quantity"
             android:layout_width="match_parent"
-            android:layout_height="26dp"
+            android:layout_height="60dp"
             android:gravity="top"
             android:hint="@string/add_quantity" />
 

@@ -114,6 +114,7 @@ public class ShoppingLocalDataSource implements ShoppingDataSource {
                 // converting from a {@code taskId} to a {@link task} using its cached data.
         }
 
+
         @Override
         public void activatePurchase(@NonNull final Purchase purchase,@NonNull final String quantity) {
                 Runnable activateRunnable = new Runnable() {
@@ -124,6 +125,8 @@ public class ShoppingLocalDataSource implements ShoppingDataSource {
                 };
                 mAppExecutors.diskIO().execute(activateRunnable);
         }
+
+
 
 
         @Override
@@ -156,11 +159,13 @@ public class ShoppingLocalDataSource implements ShoppingDataSource {
                 mAppExecutors.diskIO().execute(deleteRunnable);
         }
 
-
         @Override
-        public void completePurchase(@NonNull Purchase purchase) {
+        public void completePurchase(@NonNull Purchase purchase, String user) {
 
         }
+
+
+
 
         @Override
         public void completePurchase(@NonNull String productId) {

@@ -8,12 +8,19 @@ import android.support.v7.widget.Toolbar;
 
 import com.example.jorge.mytestapp.Injection;
 import com.example.jorge.mytestapp.R;
+import com.example.jorge.mytestapp.data.source.remote.model.Product;
 import com.example.jorge.mytestapp.util.ActivityUtils;
+
+import static com.example.jorge.mytestapp.products.ProductFragment.EXTRA_BUNDLE_PRODUCT;
+import static com.example.jorge.mytestapp.products.ProductFragment.EXTRA_PRODUCT;
 
 public class PurchaseDetailActivity extends AppCompatActivity {
 
     public static final String EXTRA_PRODUCT_ID = "PRODUCT_ID";
-    public static final String EXTRA_USER = "USER";
+
+    private Product mProduct;
+    private Bundle mBundle;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +40,11 @@ public class PurchaseDetailActivity extends AppCompatActivity {
         PurchaseDetailFragment PurchaseDetailFragment = (PurchaseDetailFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.contentFrame);
 
+        mBundle = getIntent().getBundleExtra(EXTRA_BUNDLE_PRODUCT);
+        mProduct = (Product) mBundle.getSerializable(EXTRA_PRODUCT);
+
         if (PurchaseDetailFragment == null) {
-            PurchaseDetailFragment = PurchaseDetailFragment.newInstance(EXTRA_PRODUCT_ID,EXTRA_USER);
+            PurchaseDetailFragment = PurchaseDetailFragment.newInstance(shoppingId,mProduct);
 
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
                     PurchaseDetailFragment, R.id.contentFrame);

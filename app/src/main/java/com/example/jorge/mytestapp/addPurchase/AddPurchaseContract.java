@@ -17,7 +17,7 @@ public interface AddPurchaseContract {
 
         void setQuantity(String quantity);
 
-
+        boolean isActive();
 
     }
 

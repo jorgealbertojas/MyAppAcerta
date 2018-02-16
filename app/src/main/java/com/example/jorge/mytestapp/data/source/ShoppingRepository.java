@@ -1,5 +1,6 @@
 package com.example.jorge.mytestapp.data.source;
 
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -10,6 +11,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import static android.content.Context.MODE_PRIVATE;
+import static com.example.jorge.mytestapp.products.ProductActivity.SHARED_KEY_USER;
+import static com.example.jorge.mytestapp.products.ProductActivity.SHARED_PREF_USER;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -36,12 +40,18 @@ public class ShoppingRepository implements ShoppingDataSource{
         mShoppingLocalDataSource = checkNotNull(shoppingLocalDataSource);
     }
 
+
+
     public static ShoppingRepository getInstance(ShoppingDataSource ShoppingRemoteDataSource,
                                                  ShoppingDataSource ShoppingLocalDataSource) {
         if (INSTANCE == null) {
             INSTANCE = new ShoppingRepository(ShoppingRemoteDataSource, ShoppingLocalDataSource);
         }
         return INSTANCE;
+    }
+
+    public static void destroyInstance() {
+        INSTANCE = null;
     }
 
 
@@ -127,37 +137,79 @@ public class ShoppingRepository implements ShoppingDataSource{
 
     @Override
     public void savePurchase(@NonNull Purchase purchase) {
+        checkNotNull(purchase);
+        mShoppingRemoteDataSource.savePurchase(purchase);
+        mShoppingLocalDataSource.savePurchase(purchase);
 
+        // Do in memory cache update to keep the app UI up to date
+        if (mCachedShopping == null) {
+            mCachedShopping = new LinkedHashMap<>();
+        }
+        mCachedShopping.put(purchase.getId(), purchase);
     }
 
     @Override
     public void activatePurchase(@NonNull String productId) {
-
+        checkNotNull(productId);
+        activatePurchase(getPurchaseWithId(productId),"1");
     }
+
+
 
     @Override
     public void activatePurchase(@NonNull Purchase purchase, String quantity) {
+        checkNotNull(purchase);
+        mShoppingRemoteDataSource.activatePurchase(purchase,quantity);
+        mShoppingLocalDataSource.activatePurchase(purchase, quantity);
 
+        Purchase activeTask = new Purchase(purchase.getProductId(), purchase.getUser(),purchase.getNameProduct(),purchase.getQuantity(),purchase.getImage(), purchase.getId());
+
+        // Do in memory cache update to keep the app UI up to date
+        if (mCachedShopping == null) {
+            mCachedShopping = new LinkedHashMap<>();
+        }
+        mCachedShopping.put(purchase.getId(), activeTask);
     }
+
 
     @Override
     public void refreshShopping() {
-
+        mCacheIsDirty = true;
     }
 
     @Override
     public void deleteAllShopping() {
+        mShoppingRemoteDataSource.deleteAllShopping();
+        mShoppingLocalDataSource.deleteAllShopping();
 
+        if (mCachedShopping == null) {
+            mCachedShopping = new LinkedHashMap<>();
+        }
+        mCachedShopping.clear();
     }
 
     @Override
     public void deletePurchase(@NonNull String shoppingId) {
-
+        mShoppingRemoteDataSource.deletePurchase(checkNotNull(shoppingId));
+        mShoppingLocalDataSource.deletePurchase(checkNotNull(shoppingId));
+        mCachedShopping.remove(shoppingId);
     }
 
-    @Override
-    public void completePurchase(@NonNull Purchase purchase) {
 
+
+    @Override
+    public void completePurchase(@NonNull Purchase purchase, String user) {
+        checkNotNull(purchase);
+        mShoppingRemoteDataSource.completePurchase(purchase, user);
+        mShoppingLocalDataSource.completePurchase(purchase, user);
+
+        Purchase completedPurchase = new Purchase(purchase.getProductId(), user, purchase.getNameProduct(),purchase.getQuantity(),purchase.getImage(), purchase.getId());
+
+        // Do in memory cache update to keep the app UI up to date
+        if (mCachedShopping == null) {
+            mCachedShopping = new LinkedHashMap<>();
+        }
+        mCachedShopping.put(purchase.getId(), completedPurchase);
     }
 
     @Override
@@ -208,4 +260,6 @@ public class ShoppingRepository implements ShoppingDataSource{
             mShoppingLocalDataSource.savePurchase(purchase);
         }
     }
+
+
 }

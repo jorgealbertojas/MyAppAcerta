@@ -14,6 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.jorge.mytestapp.R;
@@ -31,23 +33,25 @@ public class PurchaseDetailFragment extends Fragment implements PurchaseDetailCo
 
     @NonNull
     private static final String ARGUMENT_PRODUCT_ID = "PRODUCT_ID";
-    private static final String ARGUMENT_USER = "USER";
+    private static final String ARGUMENT_PRODUCT = "PRODUCT";
 
     @NonNull
     private static final int REQUEST_EDIT_TASK = 1;
 
     private PurchaseDetailContract.Presenter mPresenter;
 
-    private TextView mProductID;
+    private TextView mProdcutId;
 
     private TextView mName;
 
     private TextView mQuantity;
 
-    public static PurchaseDetailFragment newInstance(@Nullable String productId, @Nullable String user) {
+    private ImageView mImage;
+
+    public static PurchaseDetailFragment newInstance(@Nullable String shoppingId, Product product ) {
         Bundle arguments = new Bundle();
-        arguments.putString(ARGUMENT_PRODUCT_ID, productId);
-        arguments.putString(ARGUMENT_USER, user);
+        arguments.putString(ARGUMENT_PRODUCT_ID, shoppingId);
+        arguments.putSerializable(ARGUMENT_PRODUCT, product);
         PurchaseDetailFragment fragment = new PurchaseDetailFragment();
         fragment.setArguments(arguments);
         return fragment;
@@ -65,13 +69,15 @@ public class PurchaseDetailFragment extends Fragment implements PurchaseDetailCo
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.purchase_detail_frag, container, false);
         setHasOptionsMenu(true);
-        mName = (TextView) root.findViewById(R.id.tv_name);
-        mQuantity = (TextView) root.findViewById(R.id.tv_quantity);
 
+        mProdcutId = (TextView) root.findViewById(R.id.tv_code);
+        mName = (TextView) root.findViewById(R.id.tv_product_name);
+        mQuantity = (TextView) root.findViewById(R.id.tv_quantity);
+        mImage = (ImageView) root.findViewById(R.id.im_product_image);
 
         // Set up floating action button
         FloatingActionButton fab =
-                (FloatingActionButton) getActivity().findViewById(R.id.fab_edit_purchase_done);
+                (FloatingActionButton) getActivity().findViewById(R.id.fab_edit_purchase);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

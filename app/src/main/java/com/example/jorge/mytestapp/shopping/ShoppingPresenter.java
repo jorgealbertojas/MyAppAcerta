@@ -76,10 +76,11 @@ public class ShoppingPresenter implements ShoppingContract.Presenter {
     }
 
 
+
     @Override
-    public void activatePurchase(@NonNull Purchase activePurchase, String quantity) {
+    public void activatePurchase(@NonNull Purchase activePurchase, @NonNull String quantity ) {
         checkNotNull(activePurchase, "activeTask cannot be null!");
-        mShoppingRepository.activatePurchase(activePurchase, quantity);
+        mShoppingRepository.activatePurchase(activePurchase,quantity);
         mShoppingView.showPurchaseMarkedActive();
         //  loadTasks(false, false);
     }

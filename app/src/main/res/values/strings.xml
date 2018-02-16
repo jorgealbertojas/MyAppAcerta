@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">MyTestApp</string>
+
+    <string name="share_preference_file_key">share_preference_file_key</string>
+    <string name="saved_user">saved_user</string>
+
     <string name="empty_task_message">Shopping cannot be empty</string>
 
     <string name="add_purchase">New Purchase</string>
@@ -12,7 +16,7 @@
     <string name="no_shopping_all">You have no Purchase!</string>
     <string name="no_shopping_active">You have no Purchase!</string>
     <string name="no_shopping_completed">You have no list Purchase!</string>
-
+    <string name="successfully_saved_purchase_message">TO-DO saved</string>
     <string name="loading">LOADING</string>
     <string name="menu_delete_purchase">Delete purchase</string>
 

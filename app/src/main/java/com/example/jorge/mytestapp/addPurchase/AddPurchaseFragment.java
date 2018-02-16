@@ -1,8 +1,12 @@
 package com.example.jorge.mytestapp.addPurchase;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +15,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import static android.content.Context.MODE_PRIVATE;
+import static com.example.jorge.mytestapp.products.ProductActivity.SHARED_KEY_USER;
+import static com.example.jorge.mytestapp.products.ProductActivity.SHARED_PREF_USER;
 import static com.google.common.base.Preconditions.checkNotNull;
 import android.support.design.widget.Snackbar;
 
@@ -42,6 +49,22 @@ public class AddPurchaseFragment extends Fragment implements AddPurchaseContract
         return new AddPurchaseFragment();
     }
 
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        FloatingActionButton fab =
+                (FloatingActionButton) getActivity().findViewById(R.id.fab_edit_purchase_done);
+        fab.setImageResource(R.drawable.ic_done);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String user = getUserSehredPreference();
+                mPresenter.savePurchase(mProductId.getText().toString(),user,mQuantity.getText().toString(), mProductName.toString(),  mProduct.getUrl_image_big());
+            }
+        });
+    }
 
     @Nullable
     @Override
@@ -83,6 +106,11 @@ public class AddPurchaseFragment extends Fragment implements AddPurchaseContract
         mQuantity.setText(quantity);
     }
 
+    @Override
+    public boolean isActive() {
+        return isAdded();
+    }
+
     public void ShowProduct(Product product){
         mProductName.setText(product.getName());
         mProductId.setText(Integer.toString(product.getId()));
@@ -92,6 +120,10 @@ public class AddPurchaseFragment extends Fragment implements AddPurchaseContract
                 .fit().centerCrop()
                 .placeholder(R.mipmap.ic_launcher)
                 .into(mProductImage);
+    }
 
+    private String getUserSehredPreference(){
+        SharedPreferences sp = getActivity().getSharedPreferences(SHARED_PREF_USER, MODE_PRIVATE);
+        return sp.getString(SHARED_KEY_USER, null);
     }
 }

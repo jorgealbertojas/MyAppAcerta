@@ -2,6 +2,7 @@ package com.example.jorge.mytestapp.shopping;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -24,6 +25,7 @@ import com.example.jorge.mytestapp.data.source.remote.model.Product;
 import com.example.jorge.mytestapp.purchaseDetail.PurchaseDetailActivity;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -56,6 +58,39 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
 
 
     private static Product mProduct;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mListAdapter = new ShoppingAdapter(new ArrayList<Purchase>(0), mItemListener);
+    }
+
+    /**
+     * Listener for clicks on shopping in the ListView.
+     */
+    ShoppingItemListener mItemListener = new ShoppingItemListener() {
+        @Override
+        public void onPurchaseClick(Purchase clickedPurchase) {
+            mPresenter.openPurchaseDetails(clickedPurchase);
+        }
+
+        @Override
+        public void onCompletePurchaseClick(Purchase completedPurchase) {
+            mPresenter.completePurchase(completedPurchase);
+        }
+
+        @Override
+        public void onActivatePurchaseClick(Purchase activatedPurchase) {
+            mPresenter.activatePurchase(activatedPurchase,"1");
+        }
+
+
+    };
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        mPresenter.result(requestCode, resultCode);
+    }
 
     @Nullable
     @Override
@@ -174,6 +209,10 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
     public void showPurchaseDetailsUi(String productId, String user) {
         Intent intent = new Intent(getContext(), PurchaseDetailActivity.class);
 
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(EXTRA_PRODUCT_SHOPPING, mProduct );
+        intent.putExtra(EXTRA_BUNDLE_PRODUCT_SHOPPING, bundle);
+
         startActivity(intent);
     }
 
@@ -215,7 +254,11 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
 
     @Override
     public void showNoActiveShopping() {
-
+        showNoShoppingViews(
+                getResources().getString(R.string.no_shopping_active),
+                R.drawable.ic_check_circle_24dp,
+                false
+        );
     }
 
 
@@ -231,7 +274,7 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
 
     @Override
     public void showSuccessfullySavedMessage() {
-
+        showMessage(getString(R.string.successfully_saved_purchase_message));
     }
 
     @Override
@@ -239,10 +282,7 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
         return false;
     }
 
-    @Override
-    public void showFilteringPopUpMenu() {
 
-    }
 
 
     public void showProduct(Product product) {
@@ -269,9 +309,9 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
     private static class ShoppingAdapter extends BaseAdapter {
 
         private List<Purchase> mPurchaseList;
-        private PurchaseItemListener mItemListener;
+        private ShoppingItemListener mItemListener;
 
-        public ShoppingAdapter(List<Purchase> tasks, PurchaseItemListener itemListener) {
+        public ShoppingAdapter(List<Purchase> tasks, ShoppingItemListener itemListener) {
             setList(tasks);
             mItemListener = itemListener;
         }
@@ -325,13 +365,15 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
         }
     }
 
-    public interface PurchaseItemListener {
 
-        void onPurchaseClick(Purchase clickedTask);
 
-        void onCompletePurchaseClick(Purchase completedTask);
+    public interface ShoppingItemListener {
 
-        void onActivatePurchaseClick(Purchase activatedTask);
+        void onPurchaseClick(Purchase clickedPurchase);
+
+        void onCompletePurchaseClick(Purchase completedPurchase);
+
+        void onActivatePurchaseClick(Purchase activatedPurchase);
     }
 
 

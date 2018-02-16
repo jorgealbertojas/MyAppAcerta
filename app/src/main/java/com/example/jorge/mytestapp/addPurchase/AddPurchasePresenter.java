@@ -30,6 +30,8 @@ public class AddPurchasePresenter implements AddPurchaseContract.Presenter, Shop
         mAddPurchaseView = addPurchaseView;
         mShoppingId = shoppingId;
         mIsDataMissing = isDataMissing;
+
+        mAddPurchaseView.setPresenter(this);
     }
 
     @Override
@@ -60,7 +62,7 @@ public class AddPurchasePresenter implements AddPurchaseContract.Presenter, Shop
 
     @Override
     public boolean isDataMissing() {
-        return false;
+        return mIsDataMissing;
     }
 
     private boolean isNewPurchase() {
@@ -71,7 +73,12 @@ public class AddPurchasePresenter implements AddPurchaseContract.Presenter, Shop
 
     @Override
     public void onPurchaseLoaded(Purchase purchase) {
-
+        // The view may not be able to handle UI updates anymore
+        if (mAddPurchaseView.isActive()) {
+            mAddPurchaseView.setQuantity(purchase.getQuantity());
+            //mAddPurchaseView.setDescription(task.getDescription());
+        }
+        mIsDataMissing = false;
     }
 
     @Override

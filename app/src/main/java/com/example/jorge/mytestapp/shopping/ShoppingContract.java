@@ -44,8 +44,6 @@ public interface ShoppingContract{
 
         boolean isActive();
 
-        void showFilteringPopUpMenu();
-
 
     }
 

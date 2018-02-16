@@ -70,11 +70,11 @@ public class FakeShoppingRemoteDataSource implements ShoppingDataSource {
 
     }
 
-
     @Override
-    public void completePurchase(@NonNull Purchase purchase) {
+    public void completePurchase(@NonNull Purchase purchase, String user) {
 
     }
+
 
     @Override
     public void completePurchase(@NonNull String productId) {
