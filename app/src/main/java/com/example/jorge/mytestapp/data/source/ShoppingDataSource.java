@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.example.jorge.mytestapp.data.Purchase;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,6 +25,14 @@ public interface ShoppingDataSource {
         void onShoppingLoaded(List<Purchase> Purchase);
 
         void onDataNotAvailable();
+
+     }
+
+    interface FindShoppingCallback {
+
+        void onFindLoaded(List<Purchase> Purchase);
+
+        void onDataNotAvailable();
     }
 
     interface GetPurchaseCallback {
@@ -33,7 +42,9 @@ public interface ShoppingDataSource {
         void onDataNotAvailable();
     }
 
-   void getShopping(@NonNull LoadShoppingCallback callback);
+    void getFind(@NonNull FindShoppingCallback callback, String partName);
+
+    void getShopping(@NonNull LoadShoppingCallback callback);
 
     void getPurchase(@NonNull String shoppingId , @NonNull GetPurchaseCallback callback);
 

@@ -21,6 +21,8 @@ public interface ShoppingContract{
 
         void showShopping(List<Purchase> listPurchase);
 
+        void showFind(List<Purchase> listPurchase);
+
         void showAddPurchase();
 
         void showPurchaseDetailsUi(String shoppingId);
@@ -53,6 +55,8 @@ public interface ShoppingContract{
         void result(int requestCode, int resultCode);
 
         void loadShopping(boolean forceUpdate);
+
+        void FindShopping(String partName);
 
         void addNewPurchase();
 

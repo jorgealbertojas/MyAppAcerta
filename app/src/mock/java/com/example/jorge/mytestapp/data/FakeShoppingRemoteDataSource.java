@@ -30,6 +30,11 @@ public class FakeShoppingRemoteDataSource implements ShoppingDataSource {
     }
 
     @Override
+    public void getFind(@NonNull FindShoppingCallback callback, String partName) {
+
+    }
+
+    @Override
     public void getShopping(@NonNull LoadShoppingCallback callback) {
         callback.onShoppingLoaded(Lists.newArrayList(TASKS_SERVICE_DATA.values()));
     }
@@ -39,6 +44,7 @@ public class FakeShoppingRemoteDataSource implements ShoppingDataSource {
         Purchase purchase = TASKS_SERVICE_DATA.get(shoppingId);
         callback.onPurchaseLoaded(purchase);
     }
+
 
 
 

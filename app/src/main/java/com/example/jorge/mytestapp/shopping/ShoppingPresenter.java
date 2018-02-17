@@ -111,6 +111,65 @@ public class ShoppingPresenter implements ShoppingContract.Presenter {
     }
 
 
+
+    @Override
+    public void FindShopping(String partName) {
+        findShopping(partName);
+    }
+
+    private void findShopping(String partName) {
+        if (true) {
+            mShoppingView.setLoadingIndicator(true);
+        }
+        if (true) {
+            mShoppingRepository.refreshShopping();
+        }
+
+        // The network request might be handled in a different thread so make sure Espresso knows
+        // that the app is busy until the response is handled.
+        EspressoIdlingResource.increment(); // App is busy until further notice
+
+        mShoppingRepository.getShopping(new ShoppingDataSource.LoadShoppingCallback() {
+
+            @Override
+            public void onShoppingLoaded(List<Purchase> purchaseList) {
+                List<Purchase> tasksToShow = new ArrayList<Purchase>();
+
+                // This callback may be called twice, once for the cache and once for loading
+                // the data from the server API, so we check before decrementing, otherwise
+                // it throws "Counter has been corrupted!" exception.
+                if (!EspressoIdlingResource.getIdlingResource().isIdleNow()) {
+                    EspressoIdlingResource.decrement(); // Set app as idle.
+                }
+
+                // We filter the tasks based on the requestType
+                for (Purchase purchase : purchaseList) {
+                    tasksToShow.add(purchase);
+                }
+
+                // The view may not be able to handle UI updates anymore
+                if (!mShoppingView.isActive()) {
+                    return;
+                }
+                if (true) {
+                    mShoppingView.setLoadingIndicator(false);
+                }
+
+                processTasks(tasksToShow);
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+                // The view may not be able to handle UI updates anymore
+                if (!mShoppingView.isActive()) {
+                    return;
+                }
+                mShoppingView.showLoadingShoppingError();
+            }
+        });
+    }
+
+
     @Override
     public void addNewPurchase() {
         mShoppingView.showAddPurchase();

@@ -29,6 +29,10 @@ public interface ShoppingDao {
     @Query("SELECT * FROM Shopping WHERE entryid = :shoppingId ")
     Purchase getPurchaseById(String shoppingId);
 
+
+    @Query("SELECT * FROM Shopping WHERE nameProduct like ''%:partName%'' ")
+    List<Purchase> getFind(String partName);
+
     /**
      * Insert a Purchase in the database. If the Purchase already exists, replace it.
      */

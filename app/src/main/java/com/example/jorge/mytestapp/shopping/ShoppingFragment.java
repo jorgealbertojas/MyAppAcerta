@@ -216,6 +216,15 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
         mNoShoppingView.setVisibility(View.GONE);
     }
 
+    @Override
+    public void showFind(List<Purchase> listPurchase) {
+        mListAdapter.replaceData(listPurchase);
+
+        mShoppingView.setVisibility(View.VISIBLE);
+        mNoShoppingView.setVisibility(View.GONE);
+    }
+
+
 
 
     @Override
@@ -370,8 +379,11 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
 
             final Purchase purchase = getItem(i);
 
-            TextView titleTV = (TextView) rowView.findViewById(R.id.tv_name);
-            titleTV.setText(purchase.getTitleForList());
+            TextView tvName = (TextView) rowView.findViewById(R.id.tv_name);
+            TextView tvQuantity = (TextView) rowView.findViewById(R.id.tv_quantity);
+
+            tvName.setText(purchase.getTitleForList());
+            tvQuantity.setText(purchase.getQuantity());
 
 
             ImageView imageView = (ImageView) rowView.findViewById(R.id.iv_image_item);
@@ -384,10 +396,10 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
                     .into(imageView);
 
 
-            rowView.setBackgroundDrawable(viewGroup.getContext().getResources().getDrawable(R.drawable.list_completed_touch_feedback));
+            //rowView.setBackgroundDrawable(viewGroup.getContext().getResources().getDrawable(R.drawable.list_completed_touch_feedback));
 
-            //rowView.setBackgroundDrawable(viewGroup.getContext()
-            //            .getResources().getDrawable(R.drawable.touch_feedback));
+            rowView.setBackgroundDrawable(viewGroup.getContext()
+                        .getResources().getDrawable(R.drawable.touch_feedback));
 
 
             imageView.setOnClickListener(new View.OnClickListener() {

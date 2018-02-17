@@ -103,7 +103,7 @@ public final class Purchase {
         if (!Strings.isNullOrEmpty(mNameProduct)) {
             return mNameProduct;
         } else {
-            return mNameProduct;
+            return mId;
         }
     }
 

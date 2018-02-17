@@ -73,6 +73,33 @@ public class ShoppingLocalDataSource implements ShoppingDataSource {
                 mAppExecutors.diskIO().execute(runnable);
         }
 
+        /**
+         * This function is Fired if the database doesn't exist
+         * or the table is empty.
+         */
+        @Override
+        public void getFind(@NonNull final FindShoppingCallback callback, final String partName) {
+                Runnable runnable = new Runnable() {
+                        @Override
+                        public void run() {
+                                final List<Purchase> shopping = mShoppingDao.getFind(partName);
+                                mAppExecutors.mainThread().execute(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                                if (shopping.isEmpty()) {
+                                                        // This will be called if the table is new or just empty.
+                                                        callback.onDataNotAvailable();
+                                                } else {
+                                                        callback.onFindLoaded(shopping);
+                                                }
+                                        }
+                                });
+                        }
+                };
+
+                mAppExecutors.diskIO().execute(runnable);
+        }
+
         @Override
         public void getPurchase(@NonNull final String shoppingId, @NonNull final GetPurchaseCallback callback) {
                 Runnable runnable = new Runnable() {
