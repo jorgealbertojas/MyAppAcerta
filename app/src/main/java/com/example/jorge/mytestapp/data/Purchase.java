@@ -108,7 +108,7 @@ public final class Purchase {
     }
 
     public boolean isCompleted() {
-        return (mProductId != null);
+        return (mProductId == null);
     }
 
 

@@ -61,9 +61,9 @@ ShoppingActivity extends AppCompatActivity {
 
         // Load previously saved state, if available.
         if (savedInstanceState != null) {
-          //  TasksFilterType currentFiltering =
+           // TasksFilterType currentFiltering =
           //          (TasksFilterType) savedInstanceState.getSerializable(CURRENT_FILTERING_KEY);
-          //  mTasksPresenter.setFiltering(currentFiltering);
+         //   mTasksPresenter.setFiltering(currentFiltering);
         }
     }
 
@@ -90,5 +90,10 @@ ShoppingActivity extends AppCompatActivity {
     @VisibleForTesting
     public IdlingResource getCountingIdlingResource() {
         return EspressoIdlingResource.getIdlingResource();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

@@ -27,7 +27,11 @@ public abstract class ToDoDatabase extends RoomDatabase {
                 INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                         ToDoDatabase.class, "Purchase.db")
                         .build();
+            }else{
+               // INSTANCE.setTransactionSuccessful();
             }
+           // INSTANCE.beginTransaction();
+
             return INSTANCE;
         }
     }

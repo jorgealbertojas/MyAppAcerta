@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import com.example.jorge.mytestapp.data.Purchase;
 import com.example.jorge.mytestapp.data.source.ShoppingDataSource;
 import com.example.jorge.mytestapp.data.source.ShoppingRepository;
+import com.example.jorge.mytestapp.data.source.remote.model.Product;
 import com.google.common.base.Strings;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -22,15 +23,16 @@ public class PurchaseDetailPresenter implements PurchaseDetailContract.Presenter
 
     @Nullable
     private String mShoppingId;
+    private Product mProduct;
 
 
     public PurchaseDetailPresenter(@Nullable ShoppingRepository shoppingRepository,
                                    @Nullable PurchaseDetailContract.View purchaseDetailView ,
-                                   @Nullable String shoppingId) {
+                                   @Nullable String shoppingId, @Nullable Product product ) {
         mShoppingId = shoppingId;
         mShoppingRepository = checkNotNull(shoppingRepository,"tasksRepository cannot be null!");
         mPurchaseDetailView = checkNotNull(purchaseDetailView,"taskDetailView cannot be null!");
-
+        mProduct = product;
         mPurchaseDetailView.setPresenter(this);
     }
 
@@ -83,11 +85,12 @@ public class PurchaseDetailPresenter implements PurchaseDetailContract.Presenter
             mPurchaseDetailView.showMissingPurchase();
             return;
         }
-        mPurchaseDetailView.showEditPurchase(mShoppingId);
+        mPurchaseDetailView.showEditPurchase(mShoppingId,mProduct);
     }
 
     @Override
     public void deletePurchase() {
+
         if (Strings.isNullOrEmpty(mShoppingId)) {
             mPurchaseDetailView.showMissingPurchase();
             return;
@@ -112,12 +115,12 @@ public class PurchaseDetailPresenter implements PurchaseDetailContract.Presenter
     }
 
     @Override
-    public void activatePurchase() {
+    public void activatePurchase(String quantity) {
         if (Strings.isNullOrEmpty(mShoppingId)) {
             mPurchaseDetailView.showMissingPurchase();
             return;
         }
-        mShoppingRepository.activatePurchase(mShoppingId);
+        mShoppingRepository.activatePurchase(mShoppingId, quantity);
         mPurchaseDetailView.showPurchaseMarkedActive();
     }
 
@@ -136,6 +139,6 @@ public class PurchaseDetailPresenter implements PurchaseDetailContract.Presenter
         } else {
             mPurchaseDetailView.showQuantity(quantity);
         }
-
+        mPurchaseDetailView.showCompletionStatus(purchase.isCompleted());
     }
 }

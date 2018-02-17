@@ -144,9 +144,9 @@ public class ShoppingRepository implements ShoppingDataSource{
     }
 
     @Override
-    public void activatePurchase(@NonNull String productId) {
+    public void activatePurchase(@NonNull String productId, String quantity) {
         checkNotNull(productId);
-        activatePurchase(getPurchaseWithId(productId),"1");
+        activatePurchase(getPurchaseWithId(productId),quantity);
     }
 
 
@@ -157,7 +157,7 @@ public class ShoppingRepository implements ShoppingDataSource{
         mShoppingRemoteDataSource.activatePurchase(purchase,quantity);
         mShoppingLocalDataSource.activatePurchase(purchase, quantity);
 
-        Purchase activeTask = new Purchase(purchase.getProductId(), purchase.getUser(),purchase.getNameProduct(),purchase.getQuantity(),purchase.getImage(), purchase.getId());
+        Purchase activeTask = new Purchase(purchase.getProductId(), purchase.getUser(),purchase.getNameProduct(),quantity,purchase.getImage(), purchase.getId());
 
         // Do in memory cache update to keep the app UI up to date
         if (mCachedShopping == null) {

@@ -119,13 +119,13 @@ public class ShoppingPresenter implements ShoppingContract.Presenter {
     @Override
     public void openPurchaseDetails(@NonNull Purchase requestedPurchase) {
         checkNotNull(requestedPurchase, "requestedTask cannot be null!");
-        mShoppingView.showPurchaseDetailsUi(requestedPurchase.getId(),requestedPurchase.getUser());
+        mShoppingView.showPurchaseDetailsUi(requestedPurchase.getId());
     }
 
     @Override
-    public void completePurchase(@NonNull Purchase completedTask) {
-        checkNotNull(completedTask, "completedTask cannot be null!");
-        mShoppingRepository.completePurchase(completedTask,completedTask.getUser());
+    public void completePurchase(@NonNull Purchase completedPurchase) {
+        checkNotNull(completedPurchase, "completedTask cannot be null!");
+        mShoppingRepository.completePurchase(completedPurchase,completedPurchase.getUser());
         mShoppingView.showPurchaseMarkedComplete();
         loadShopping(false, false);
 
@@ -135,9 +135,11 @@ public class ShoppingPresenter implements ShoppingContract.Presenter {
 
 
     @Override
-    public void activatePurchase(@NonNull Purchase activePurchase, @NonNull String quantity ) {
+    public void activatePurchase(@NonNull Purchase activePurchase ) {
         checkNotNull(activePurchase, "activeTask cannot be null!");
-        mShoppingRepository.activatePurchase(activePurchase,quantity);
+
+
+        mShoppingRepository.activatePurchase(activePurchase.getId(), activePurchase.getQuantity());
         mShoppingView.showPurchaseMarkedActive();
         loadShopping(false, false);
     }

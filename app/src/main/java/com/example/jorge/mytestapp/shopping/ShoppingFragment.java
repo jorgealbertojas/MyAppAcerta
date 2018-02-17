@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -38,12 +39,17 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
     public static String EXTRA_PRODUCT_SHOPPING = "PRODUCT_SHOPPING";
     public static String EXTRA_BUNDLE_PRODUCT_SHOPPING = "BUNDLE_PRODUCT_SHOPPING";
 
+    public static String EXTRA_SHOPPING_ID = "SHOPPING_ID";
+    public static String EXTRA_BUNDLE_SHOPPING_SHOPPING = "BUNDLE_SHOPPING_SHOPPING";
+
 
     private ShoppingContract.Presenter mPresenter;
 
     private ShoppingAdapter mListAdapter;
 
     private View mNoShoppingView;
+
+    private LinearLayout mShoppingView;
 
     private ImageView mNoShoppingIcon;
 
@@ -85,7 +91,7 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
 
         @Override
         public void onActivatePurchaseClick(Purchase activatedPurchase) {
-            mPresenter.activatePurchase(activatedPurchase,"1");
+            mPresenter.activatePurchase(activatedPurchase);
         }
 
 
@@ -111,6 +117,8 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
         // Set up Shopping view
         ListView listView = (ListView) root.findViewById(R.id.lv_shopping);
         listView.setAdapter(mListAdapter);
+
+        mShoppingView = (LinearLayout) root.findViewById(R.id.ll_shopping);
 
         // Set up  no Shopping view
         mNoShoppingView = root.findViewById(R.id.noShopping);
@@ -203,19 +211,27 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
     @Override
     public void showShopping(List<Purchase> listPurchase) {
         mListAdapter.replaceData(listPurchase);
+
+        mShoppingView.setVisibility(View.VISIBLE);
         mNoShoppingView.setVisibility(View.GONE);
     }
 
 
 
     @Override
-    public void showPurchaseDetailsUi(String productId, String user) {
-        Intent intent = new Intent(getContext(), PurchaseDetailActivity.class);
+    public void showPurchaseDetailsUi(String shoppingId) {
+
 
         Bundle bundle = new Bundle();
         bundle.putSerializable(EXTRA_PRODUCT_SHOPPING, mProduct );
-        intent.putExtra(EXTRA_BUNDLE_PRODUCT_SHOPPING, bundle);
 
+
+
+        // in it's own Activity, since it makes more sense that way and it gives us the flexibility
+        // to show some Intent stubbing.
+        Intent intent = new Intent(getContext(), PurchaseDetailActivity.class);
+        intent.putExtra(EXTRA_SHOPPING_ID, shoppingId);
+        intent.putExtra(EXTRA_BUNDLE_SHOPPING_SHOPPING, bundle);
         startActivity(intent);
     }
 
@@ -301,6 +317,7 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
     }
 
     private void showNoShoppingViews(String mainText, int iconRes, boolean showAddView) {
+        mShoppingView.setVisibility(View.GONE);
         mNoShoppingView.setVisibility(View.VISIBLE);
 
         mNoShoppingMainView.setText(mainText);
@@ -344,6 +361,7 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
+
             View rowView = view;
             if (rowView == null) {
                 LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());

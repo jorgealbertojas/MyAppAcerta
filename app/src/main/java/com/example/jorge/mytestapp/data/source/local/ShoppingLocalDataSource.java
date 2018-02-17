@@ -108,31 +108,30 @@ public class ShoppingLocalDataSource implements ShoppingDataSource {
                 mAppExecutors.diskIO().execute(saveRunnable);
         }
 
-        @Override
-        public void activatePurchase(@NonNull String productId) {
-                // Not required for the local data source because the {@link TasksRepository} handles
-                // converting from a {@code taskId} to a {@link task} using its cached data.
-        }
 
 
         @Override
-        public void activatePurchase(@NonNull final Purchase purchase,@NonNull final String quantity) {
+        public void activatePurchase(@NonNull final String shoppingId,@NonNull final String quantity) {
                 Runnable activateRunnable = new Runnable() {
                         @Override
                         public void run() {
-                                mShoppingDao.updateQuantity(purchase.getId(), quantity);
+                                mShoppingDao.updateQuantity(shoppingId, quantity);
                         }
                 };
                 mAppExecutors.diskIO().execute(activateRunnable);
         }
 
+        @Override
+        public void activatePurchase(@NonNull Purchase purchase, String Quantity) {
 
+        }
 
 
         @Override
         public void refreshShopping() {
                 // Not required because the {@link ShoppingRepository} handles the logic of refreshing the
                 // Shopping from all the available data sources.
+
         }
 
         @Override
@@ -164,7 +163,7 @@ public class ShoppingLocalDataSource implements ShoppingDataSource {
                 Runnable completeRunnable = new Runnable() {
                         @Override
                         public void run() {
-                                mShoppingDao.updateQuantity(purchase.getProductId(),purchase.getQuantity());
+                                mShoppingDao.updateQuantity(purchase.getId(),purchase.getQuantity());
                         }
                 };
 

@@ -48,9 +48,11 @@ public class FakeShoppingRemoteDataSource implements ShoppingDataSource {
     }
 
     @Override
-    public void activatePurchase(@NonNull String productId) {
+    public void activatePurchase(@NonNull String productI, String Quantity) {
 
     }
+
+
 
     @Override
     public void activatePurchase(@NonNull Purchase purchase, String quantity) {

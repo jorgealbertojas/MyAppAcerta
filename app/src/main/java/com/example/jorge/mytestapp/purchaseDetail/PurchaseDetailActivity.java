@@ -12,10 +12,13 @@ import com.example.jorge.mytestapp.util.ActivityUtils;
 
 import static com.example.jorge.mytestapp.products.ProductFragment.EXTRA_BUNDLE_PRODUCT;
 import static com.example.jorge.mytestapp.products.ProductFragment.EXTRA_PRODUCT;
+import static com.example.jorge.mytestapp.shopping.ShoppingFragment.EXTRA_BUNDLE_SHOPPING_SHOPPING;
+import static com.example.jorge.mytestapp.shopping.ShoppingFragment.EXTRA_PRODUCT_SHOPPING;
+import static com.example.jorge.mytestapp.shopping.ShoppingFragment.EXTRA_SHOPPING_ID;
 
 public class PurchaseDetailActivity extends AppCompatActivity {
 
-    public static final String EXTRA_PRODUCT_ID = "PRODUCT_ID";
+
 
     private Product mProduct;
     private Bundle mBundle;
@@ -34,13 +37,13 @@ public class PurchaseDetailActivity extends AppCompatActivity {
         ab.setDisplayShowHomeEnabled(true);
 
         // Get the requested task id
-        String shoppingId = getIntent().getStringExtra(EXTRA_PRODUCT_ID);
+        String shoppingId = getIntent().getStringExtra(EXTRA_SHOPPING_ID);
 
         PurchaseDetailFragment PurchaseDetailFragment = (PurchaseDetailFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.contentFrame);
 
-        mBundle = getIntent().getBundleExtra(EXTRA_BUNDLE_PRODUCT);
-        mProduct = (Product) mBundle.getSerializable(EXTRA_PRODUCT);
+        mBundle = getIntent().getBundleExtra(EXTRA_BUNDLE_SHOPPING_SHOPPING);
+        mProduct = (Product) mBundle.getSerializable(EXTRA_PRODUCT_SHOPPING);
 
         if (PurchaseDetailFragment == null) {
             PurchaseDetailFragment = PurchaseDetailFragment.newInstance(shoppingId,mProduct);
@@ -52,7 +55,7 @@ public class PurchaseDetailActivity extends AppCompatActivity {
         // Create the presenter
         new PurchaseDetailPresenter(
                 Injection.provideShoppingRepository(getApplicationContext()),
-                PurchaseDetailFragment, shoppingId);
+                PurchaseDetailFragment, shoppingId,mProduct);
     }
 
     @Override

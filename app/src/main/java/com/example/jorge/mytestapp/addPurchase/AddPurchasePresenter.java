@@ -104,7 +104,7 @@ public class AddPurchasePresenter implements AddPurchaseContract.Presenter, Shop
         if (isNewPurchase()) {
             throw new RuntimeException("updateTask() was called but task is new.");
         }
-        mShoppingRepository.savePurchase(new Purchase(productId,user,name,quantity, image));
+        mShoppingRepository.activatePurchase(mShoppingId,quantity);
         mAddPurchaseView.showPurchaseList(); // After an edit, go back to the list.
     }
 

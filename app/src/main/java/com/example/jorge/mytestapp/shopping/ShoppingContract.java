@@ -23,7 +23,7 @@ public interface ShoppingContract{
 
         void showAddPurchase();
 
-        void showPurchaseDetailsUi(String productId, String user);
+        void showPurchaseDetailsUi(String shoppingId);
 
         void showPurchaseMarkedComplete();
 
@@ -60,7 +60,7 @@ public interface ShoppingContract{
 
         void completePurchase(@NonNull Purchase completedTask);
 
-        void activatePurchase(@NonNull Purchase activeTask, @NonNull String quantity);
+        void activatePurchase(@NonNull Purchase activeTask);
 
         void clearCompletedShopping();
 

@@ -23,6 +23,11 @@ import com.example.jorge.mytestapp.addPurchase.AddPurchaseFragment;
 import com.example.jorge.mytestapp.data.source.remote.model.Product;
 import com.google.common.base.Preconditions;
 
+import static com.example.jorge.mytestapp.addPurchase.AddPurchaseFragment.ARGUMENT_EDIT_SHOPPING_ID;
+import static com.example.jorge.mytestapp.shopping.ShoppingFragment.EXTRA_BUNDLE_PRODUCT_SHOPPING;
+import static com.example.jorge.mytestapp.shopping.ShoppingFragment.EXTRA_BUNDLE_SHOPPING_SHOPPING;
+import static com.example.jorge.mytestapp.shopping.ShoppingFragment.EXTRA_PRODUCT_SHOPPING;
+import static com.example.jorge.mytestapp.shopping.ShoppingFragment.EXTRA_SHOPPING_ID;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -161,13 +166,13 @@ public class PurchaseDetailFragment extends Fragment implements PurchaseDetailCo
     }
 
     @Override
-    public void showProductid(String productId) {
+    public void showProductId(String productId) {
         mProductId.setVisibility(View.VISIBLE);
         mProductId.setText(productId);
     }
 
     @Override
-    public void hideProductid() {
+    public void hideProductId() {
         mProductId.setVisibility(View.GONE);
     }
 
@@ -178,10 +183,19 @@ public class PurchaseDetailFragment extends Fragment implements PurchaseDetailCo
     }
 
     @Override
-    public void showEditPurchase(String shoppingId) {
+    public void showEditPurchase(String shoppingId, Product product) {
+
+        mProduct = product;
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(EXTRA_PRODUCT_SHOPPING, mProduct );
+
+        // in it's own Activity, since it makes more sense that way and it gives us the flexibility
+        // to show some Intent stubbing.
         Intent intent = new Intent(getContext(), AddPurchaseActivity.class);
-        intent.putExtra(AddPurchaseFragment.ARGUMENT_EDIT_SHOPPING_ID, shoppingId);
-        startActivityForResult(intent, REQUEST_EDIT_TASK);
+        intent.putExtra(ARGUMENT_EDIT_SHOPPING_ID, shoppingId);
+        intent.putExtra(EXTRA_BUNDLE_PRODUCT_SHOPPING, bundle);
+        startActivity(intent);
     }
 
 

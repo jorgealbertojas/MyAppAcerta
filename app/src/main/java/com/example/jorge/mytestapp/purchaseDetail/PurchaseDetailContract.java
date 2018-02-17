@@ -2,6 +2,7 @@ package com.example.jorge.mytestapp.purchaseDetail;
 
 import com.example.jorge.mytestapp.BasePresenter;
 import com.example.jorge.mytestapp.BaseView;
+import com.example.jorge.mytestapp.data.source.remote.model.Product;
 
 /**
  * Created by jorge on 15/02/2018.
@@ -37,9 +38,9 @@ public interface PurchaseDetailContract {
         void hideUser();
 
 
-        void showProductid(String productid);
+        void showProductId(String productId);
 
-        void hideProductid();
+        void hideProductId();
 
 
 
@@ -48,7 +49,7 @@ public interface PurchaseDetailContract {
 
         void showCompletionStatus(boolean complete);
 
-        void showEditPurchase(String shoppingId);
+        void showEditPurchase(String shoppingId, Product product);
 
         void showPurchaseDeleted();
 
@@ -69,6 +70,6 @@ public interface PurchaseDetailContract {
 
         void completePurchase();
 
-        void activatePurchase();
+        void activatePurchase(String quantity);
     }
 }

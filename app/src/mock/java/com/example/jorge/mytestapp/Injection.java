@@ -20,6 +20,7 @@ public class Injection {
     public static ShoppingRepository provideShoppingRepository(@NonNull Context context) {
         checkNotNull(context);
         ToDoDatabase database = ToDoDatabase.getInstance(context);
+
         return ShoppingRepository.getInstance(FakeShoppingRemoteDataSource.getInstance(),
                 ShoppingLocalDataSource.getInstance(new AppExecutors(),
                         database.ShoppingDao()));
