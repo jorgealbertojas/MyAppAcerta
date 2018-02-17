@@ -45,6 +45,7 @@ public interface ShoppingContract{
         boolean isActive();
 
 
+
     }
 
     interface Presenter extends BasePresenter {

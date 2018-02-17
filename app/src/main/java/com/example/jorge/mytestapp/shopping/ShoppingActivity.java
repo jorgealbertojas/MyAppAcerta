@@ -1,8 +1,6 @@
 package com.example.jorge.mytestapp.shopping;
 
-import android.content.Intent;
 import android.support.annotation.VisibleForTesting;
-import android.support.design.widget.NavigationView;
 import android.support.test.espresso.IdlingResource;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -17,17 +15,18 @@ import com.example.jorge.mytestapp.data.source.remote.model.Product;
 import com.example.jorge.mytestapp.util.ActivityUtils;
 import com.example.jorge.mytestapp.util.EspressoIdlingResource;
 
-import java.util.ArrayList;
 
 import static com.example.jorge.mytestapp.products.ProductFragment.EXTRA_PRODUCT;
 import static com.example.jorge.mytestapp.products.ProductFragment.EXTRA_BUNDLE_PRODUCT;
 
-public class ShoppingActivity extends AppCompatActivity {
+public class
+
+ShoppingActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
     private Bundle mBundle;
 
-    private ShoppingPresenter mTasksPresenter;
+    private ShoppingPresenter mShoppingPresenter;
     private Product mProduct;
 
     @Override
@@ -46,24 +45,25 @@ public class ShoppingActivity extends AppCompatActivity {
 
 
 
-        ShoppingFragment tasksFragment =
+        ShoppingFragment shoppingFragment =
                 (ShoppingFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
-        if (tasksFragment == null) {
+
+        if (shoppingFragment == null) {
             // Create the fragment
-            tasksFragment = ShoppingFragment.newInstance(mProduct);
+            shoppingFragment = ShoppingFragment.newInstance(mProduct);
             ActivityUtils.addFragmentToActivity(
-                    getSupportFragmentManager(), tasksFragment, R.id.contentFrame);
+                    getSupportFragmentManager(), shoppingFragment, R.id.contentFrame);
         }
 
         // Create the presenter
-        mTasksPresenter = new ShoppingPresenter(
-                Injection.provideShoppingRepository(getApplicationContext()), tasksFragment);
+        mShoppingPresenter = new ShoppingPresenter(
+                Injection.provideShoppingRepository(getApplicationContext()), shoppingFragment);
 
         // Load previously saved state, if available.
         if (savedInstanceState != null) {
-           // TasksFilterType currentFiltering =
-           //         (TasksFilterType) savedInstanceState.getSerializable(CURRENT_FILTERING_KEY);
-           // mTasksPresenter.setFiltering(currentFiltering);
+          //  TasksFilterType currentFiltering =
+          //          (TasksFilterType) savedInstanceState.getSerializable(CURRENT_FILTERING_KEY);
+          //  mTasksPresenter.setFiltering(currentFiltering);
         }
     }
 

@@ -5,4 +5,5 @@
     <color name="colorAccent">#FF4081</color>
 
     <drawable name="touchFeedback">#CFD8DC</drawable>
+    <drawable name="completedTaskBackground">#CCCCCC</drawable>
 </resources>

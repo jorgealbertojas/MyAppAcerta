@@ -2,7 +2,6 @@ package com.example.jorge.mytestapp.shopping;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,8 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -45,19 +44,24 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
     private ShoppingAdapter mListAdapter;
 
     private View mNoShoppingView;
+
     private ImageView mNoShoppingIcon;
+
     private TextView mNoShoppingMainView;
     private TextView mNoShoppingAddView;
-    private LinearLayout mShoppingView;
-
     private ImageView mProductImage;
     private TextView mCode;
     private TextView mProductName;
 
-
-
-
     private static Product mProduct;
+
+
+    public static ShoppingFragment newInstance(Product product) {
+        mProduct = product;
+        return new ShoppingFragment();
+    }
+
+  //  private static Product mProduct;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -92,6 +96,12 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
         mPresenter.result(requestCode, resultCode);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.start();
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -102,11 +112,9 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
         ListView listView = (ListView) root.findViewById(R.id.lv_shopping);
         listView.setAdapter(mListAdapter);
 
-        mNoShoppingView = (LinearLayout) root.findViewById(R.id.ll_shopping);
-
         // Set up  no Shopping view
         mNoShoppingView = root.findViewById(R.id.noShopping);
-        mNoShoppingView = (ImageView) root.findViewById(R.id.im_noShoppingIcon);
+        mNoShoppingIcon = (ImageView) root.findViewById(R.id.im_noShoppingIcon);
         mNoShoppingMainView = (TextView) root.findViewById(R.id.tv_noShoppingMain);
         mNoShoppingAddView = (TextView) root.findViewById(R.id.tv_noShoppingAdd);
         mNoShoppingAddView.setOnClickListener(new View.OnClickListener() {
@@ -124,7 +132,7 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
 
         // Set up floating action button
         FloatingActionButton fab =
-                (FloatingActionButton) getActivity().findViewById(R.id.fab_add_task);
+                (FloatingActionButton) getActivity().findViewById(R.id.fab_add_purchase);
 
         fab.setImageResource(R.drawable.ic_add);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -168,10 +176,7 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
         startActivityForResult(intent, AddPurchaseActivity.REQUEST_ADD_PURCHASE);
     }
 
-    public static ShoppingFragment newInstance(Product product) {
-        mProduct = product;
-        return new ShoppingFragment();
-    }
+
 
     @Override
     public void setPresenter(ShoppingContract.Presenter presenter) {
@@ -198,8 +203,6 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
     @Override
     public void showShopping(List<Purchase> listPurchase) {
         mListAdapter.replaceData(listPurchase);
-
-        mShoppingView.setVisibility(View.VISIBLE);
         mNoShoppingView.setVisibility(View.GONE);
     }
 
@@ -279,7 +282,7 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
 
     @Override
     public boolean isActive() {
-        return false;
+        return isAdded();
     }
 
 
@@ -298,7 +301,6 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
     }
 
     private void showNoShoppingViews(String mainText, int iconRes, boolean showAddView) {
-        mShoppingView.setVisibility(View.GONE);
         mNoShoppingView.setVisibility(View.VISIBLE);
 
         mNoShoppingMainView.setText(mainText);
@@ -311,8 +313,8 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
         private List<Purchase> mPurchaseList;
         private ShoppingItemListener mItemListener;
 
-        public ShoppingAdapter(List<Purchase> tasks, ShoppingItemListener itemListener) {
-            setList(tasks);
+        public ShoppingAdapter(List<Purchase> purchaseList, ShoppingItemListener itemListener) {
+            setList(purchaseList);
             mItemListener = itemListener;
         }
 
@@ -321,8 +323,8 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
             notifyDataSetChanged();
         }
 
-        private void setList(List<Purchase> tasks) {
-            mPurchaseList = checkNotNull(tasks);
+        private void setList(List<Purchase> purchaseList) {
+            mPurchaseList = checkNotNull(purchaseList);
         }
 
         @Override
@@ -353,6 +355,33 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
             TextView titleTV = (TextView) rowView.findViewById(R.id.tv_name);
             titleTV.setText(purchase.getTitleForList());
 
+
+            ImageView imageView = (ImageView) rowView.findViewById(R.id.iv_image_item);
+
+            // Active/completed task UI
+            Picasso.with(imageView.getContext())
+                    .load(purchase.getImage())
+                    .fit().centerCrop()
+                    .placeholder(R.mipmap.ic_launcher)
+                    .into(imageView);
+
+
+            rowView.setBackgroundDrawable(viewGroup.getContext().getResources().getDrawable(R.drawable.list_completed_touch_feedback));
+
+            //rowView.setBackgroundDrawable(viewGroup.getContext()
+            //            .getResources().getDrawable(R.drawable.touch_feedback));
+
+
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!purchase.isCompleted()) {
+                        mItemListener.onCompletePurchaseClick(purchase);
+                    } else {
+                        mItemListener.onActivatePurchaseClick(purchase);
+                    }
+                }
+            });
 
             rowView.setOnClickListener(new View.OnClickListener() {
                 @Override

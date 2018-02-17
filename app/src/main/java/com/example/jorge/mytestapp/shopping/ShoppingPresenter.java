@@ -27,9 +27,9 @@ public class ShoppingPresenter implements ShoppingContract.Presenter {
 
     private boolean mFirstLoad = true;
 
-    public ShoppingPresenter(@NonNull ShoppingRepository tasksRepository, @NonNull ShoppingContract.View tasksView) {
-        mShoppingRepository = checkNotNull(tasksRepository, "tasksRepository cannot be null");
-        mShoppingView = checkNotNull(tasksView, "tasksView cannot be null!");
+    public ShoppingPresenter(@NonNull ShoppingRepository shoppingRepository, @NonNull ShoppingContract.View shoppingView) {
+        mShoppingRepository = checkNotNull(shoppingRepository, "tasksRepository cannot be null");
+        mShoppingView = checkNotNull(shoppingView, "tasksView cannot be null!");
 
         mShoppingView.setPresenter(this);
     }
@@ -56,41 +56,6 @@ public class ShoppingPresenter implements ShoppingContract.Presenter {
     }
 
 
-    @Override
-    public void addNewPurchase() {
-        mShoppingView.showAddPurchase();
-    }
-
-    @Override
-    public void openPurchaseDetails(@NonNull Purchase requestedPurchase) {
-        checkNotNull(requestedPurchase, "requestedTask cannot be null!");
-        mShoppingView.showPurchaseDetailsUi(requestedPurchase.getId(),requestedPurchase.getUser());
-    }
-
-    @Override
-    public void completePurchase(@NonNull Purchase completedTask) {
-        checkNotNull(completedTask, "completedTask cannot be null!");
-       // mTasksRepository.completeTask(completedTask);
-      //  mTasksView.showTaskMarkedComplete();
-      //  loadTasks(false, false);
-    }
-
-
-
-    @Override
-    public void activatePurchase(@NonNull Purchase activePurchase, @NonNull String quantity ) {
-        checkNotNull(activePurchase, "activeTask cannot be null!");
-        mShoppingRepository.activatePurchase(activePurchase,quantity);
-        mShoppingView.showPurchaseMarkedActive();
-        //  loadTasks(false, false);
-    }
-
-    @Override
-    public void clearCompletedShopping() {
-        //mShoppingRepository.clearCompleted();
-       // mTasksView.showCompletedTasksCleared();
-       // loadTasks(false, false);
-    }
 
 
     private void loadShopping(boolean forceUpdate, final boolean showLoadingUI) {
@@ -144,6 +109,46 @@ public class ShoppingPresenter implements ShoppingContract.Presenter {
             }
         });
     }
+
+
+    @Override
+    public void addNewPurchase() {
+        mShoppingView.showAddPurchase();
+    }
+
+    @Override
+    public void openPurchaseDetails(@NonNull Purchase requestedPurchase) {
+        checkNotNull(requestedPurchase, "requestedTask cannot be null!");
+        mShoppingView.showPurchaseDetailsUi(requestedPurchase.getId(),requestedPurchase.getUser());
+    }
+
+    @Override
+    public void completePurchase(@NonNull Purchase completedTask) {
+        checkNotNull(completedTask, "completedTask cannot be null!");
+        mShoppingRepository.completePurchase(completedTask,completedTask.getUser());
+        mShoppingView.showPurchaseMarkedComplete();
+        loadShopping(false, false);
+
+
+    }
+
+
+
+    @Override
+    public void activatePurchase(@NonNull Purchase activePurchase, @NonNull String quantity ) {
+        checkNotNull(activePurchase, "activeTask cannot be null!");
+        mShoppingRepository.activatePurchase(activePurchase,quantity);
+        mShoppingView.showPurchaseMarkedActive();
+        loadShopping(false, false);
+    }
+
+    @Override
+    public void clearCompletedShopping() {
+        //mShoppingRepository.clearCompleted();
+        // mTasksView.showCompletedTasksCleared();
+        // loadTasks(false, false);
+    }
+
 
     private void processTasks(List<Purchase> purchaseList) {
         if (purchaseList.isEmpty()) {

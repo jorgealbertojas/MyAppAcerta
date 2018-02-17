@@ -8,6 +8,8 @@ import com.example.jorge.mytestapp.data.source.ShoppingDataSource;
 import com.example.jorge.mytestapp.data.source.ShoppingRepository;
 import com.google.common.base.Strings;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Created by jorge on 15/02/2018.
  */
@@ -22,10 +24,14 @@ public class PurchaseDetailPresenter implements PurchaseDetailContract.Presenter
     private String mShoppingId;
 
 
-    public PurchaseDetailPresenter(ShoppingRepository shoppingRepository, PurchaseDetailContract.View purchaseDetailView , String shoppingId) {
+    public PurchaseDetailPresenter(@Nullable ShoppingRepository shoppingRepository,
+                                   @Nullable PurchaseDetailContract.View purchaseDetailView ,
+                                   @Nullable String shoppingId) {
         mShoppingId = shoppingId;
-        mShoppingRepository = shoppingRepository;
-        mPurchaseDetailView = purchaseDetailView;
+        mShoppingRepository = checkNotNull(shoppingRepository,"tasksRepository cannot be null!");
+        mPurchaseDetailView = checkNotNull(purchaseDetailView,"taskDetailView cannot be null!");
+
+        mPurchaseDetailView.setPresenter(this);
     }
 
     @Override

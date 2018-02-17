@@ -12,6 +12,7 @@ import com.example.jorge.mytestapp.R;
 
 import com.example.jorge.mytestapp.Injection;
 
+import com.example.jorge.mytestapp.data.source.local.ShoppingDao;
 import com.example.jorge.mytestapp.data.source.remote.model.Product;
 import com.example.jorge.mytestapp.util.ActivityUtils;
 
@@ -44,6 +45,11 @@ public class AddPurchaseActivity extends AppCompatActivity {
         mActionBar = getSupportActionBar();
         mActionBar.setDisplayHomeAsUpEnabled(true);
         mActionBar.setDisplayShowHomeEnabled(true);
+
+
+
+
+
 
         AddPurchaseFragment addPurchaseFragment = (AddPurchaseFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.contentFrame);

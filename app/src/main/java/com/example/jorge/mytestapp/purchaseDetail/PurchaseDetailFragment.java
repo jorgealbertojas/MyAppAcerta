@@ -13,8 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.EditText;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,6 +21,7 @@ import com.example.jorge.mytestapp.R;
 import com.example.jorge.mytestapp.addPurchase.AddPurchaseActivity;
 import com.example.jorge.mytestapp.addPurchase.AddPurchaseFragment;
 import com.example.jorge.mytestapp.data.source.remote.model.Product;
+import com.google.common.base.Preconditions;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -40,15 +40,17 @@ public class PurchaseDetailFragment extends Fragment implements PurchaseDetailCo
 
     private PurchaseDetailContract.Presenter mPresenter;
 
-    private TextView mProdcutId;
-
     private TextView mName;
-
     private TextView mQuantity;
+    private TextView mProductId;
+    private TextView mUrl;
+    private TextView mUser;
 
-    private ImageView mImage;
+    private Product mProduct;
 
-    public static PurchaseDetailFragment newInstance(@Nullable String shoppingId, Product product ) {
+
+
+    public static PurchaseDetailFragment newInstance(@Nullable String shoppingId, Product product) {
         Bundle arguments = new Bundle();
         arguments.putString(ARGUMENT_PRODUCT_ID, shoppingId);
         arguments.putSerializable(ARGUMENT_PRODUCT, product);
@@ -70,10 +72,14 @@ public class PurchaseDetailFragment extends Fragment implements PurchaseDetailCo
         View root = inflater.inflate(R.layout.purchase_detail_frag, container, false);
         setHasOptionsMenu(true);
 
-        mProdcutId = (TextView) root.findViewById(R.id.tv_code);
         mName = (TextView) root.findViewById(R.id.tv_product_name);
         mQuantity = (TextView) root.findViewById(R.id.tv_quantity);
-        mImage = (ImageView) root.findViewById(R.id.im_product_image);
+        mProductId = (TextView) root.findViewById(R.id.tv_code);
+        mUrl = (TextView) root.findViewById(R.id.tv_url);
+        mUser = (TextView) root.findViewById(R.id.tv_user);
+
+
+
 
         // Set up floating action button
         FloatingActionButton fab =
@@ -87,16 +93,6 @@ public class PurchaseDetailFragment extends Fragment implements PurchaseDetailCo
         });
 
         return root;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_delete:
-                mPresenter.deletePurchase();
-                return true;
-        }
-        return false;
     }
 
 
@@ -115,12 +111,9 @@ public class PurchaseDetailFragment extends Fragment implements PurchaseDetailCo
 
     @Override
     public void showMissingPurchase() {
-
-    }
-
-    @Override
-    public void hideQuantity() {
-        mQuantity.setVisibility(View.GONE);
+        mName.setText("");
+        mProductId.setText("no_data");
+        mQuantity.setText("no_data");
     }
 
     @Override
@@ -141,8 +134,46 @@ public class PurchaseDetailFragment extends Fragment implements PurchaseDetailCo
     }
 
     @Override
-    public void showCompletionStatus(boolean complete) {
+    public void hideQuantity() {
+        mQuantity.setVisibility(View.GONE);
+    }
 
+    @Override
+    public void showUrl(String url) {
+        mUrl.setVisibility(View.VISIBLE);
+        mUrl.setText(url);
+    }
+
+    @Override
+    public void hideUrl() {
+        mUrl.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showUser(String user) {
+        mUser.setVisibility(View.VISIBLE);
+        mUser.setText(user);
+    }
+
+    @Override
+    public void hideUser() {
+        mUser.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showProductid(String productId) {
+        mProductId.setVisibility(View.VISIBLE);
+        mProductId.setText(productId);
+    }
+
+    @Override
+    public void hideProductid() {
+        mProductId.setVisibility(View.GONE);
+    }
+
+
+    @Override
+    public void showCompletionStatus(boolean complete) {
 
     }
 
@@ -166,6 +197,17 @@ public class PurchaseDetailFragment extends Fragment implements PurchaseDetailCo
                 .show();
     }
 
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_delete:
+                mPresenter.deletePurchase();
+                return true;
+        }
+        return false;
+    }
+
     @Override
     public void showPurchaseMarkedActive() {
         Snackbar.make(getView(), getString(R.string.purchase_marked_active), Snackbar.LENGTH_LONG)
@@ -179,6 +221,8 @@ public class PurchaseDetailFragment extends Fragment implements PurchaseDetailCo
 
     @Override
     public boolean isActive() {
-        return false;
+        return isAdded();
     }
+
+
 }

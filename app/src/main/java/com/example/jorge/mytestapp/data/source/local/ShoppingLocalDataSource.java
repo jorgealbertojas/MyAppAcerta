@@ -160,8 +160,15 @@ public class ShoppingLocalDataSource implements ShoppingDataSource {
         }
 
         @Override
-        public void completePurchase(@NonNull Purchase purchase, String user) {
+        public void completePurchase(@NonNull final Purchase purchase,@NonNull final String quantity) {
+                Runnable completeRunnable = new Runnable() {
+                        @Override
+                        public void run() {
+                                mShoppingDao.updateQuantity(purchase.getProductId(),purchase.getQuantity());
+                        }
+                };
 
+                mAppExecutors.diskIO().execute(completeRunnable);
         }
 
 
@@ -171,6 +178,7 @@ public class ShoppingLocalDataSource implements ShoppingDataSource {
         public void completePurchase(@NonNull String productId) {
 
         }
+
 
         @VisibleForTesting
         static void clearInstance() {

@@ -1,6 +1,5 @@
 package com.example.jorge.mytestapp.data.source;
 
-import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -10,10 +9,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import static android.content.Context.MODE_PRIVATE;
-import static com.example.jorge.mytestapp.products.ProductActivity.SHARED_KEY_USER;
-import static com.example.jorge.mytestapp.products.ProductActivity.SHARED_PREF_USER;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**

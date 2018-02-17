@@ -15,13 +15,36 @@ public interface PurchaseDetailContract {
 
         void showMissingPurchase();
 
-        void hideQuantity();
+
 
         void showName(String name);
 
         void hideName();
 
+
         void showQuantity(String quantity);
+
+        void hideQuantity();
+
+
+        void showUrl(String url);
+
+        void hideUrl();
+
+
+        void showUser(String user);
+
+        void hideUser();
+
+
+        void showProductid(String productid);
+
+        void hideProductid();
+
+
+
+
+
 
         void showCompletionStatus(boolean complete);
 

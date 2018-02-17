@@ -33,7 +33,7 @@ public interface ShoppingDataSource {
         void onDataNotAvailable();
     }
 
-    void getShopping(@NonNull LoadShoppingCallback callback);
+   void getShopping(@NonNull LoadShoppingCallback callback);
 
     void getPurchase(@NonNull String shoppingId , @NonNull GetPurchaseCallback callback);
 
@@ -52,5 +52,7 @@ public interface ShoppingDataSource {
     void completePurchase(@NonNull Purchase purchase, String user);
 
     void completePurchase(@NonNull String productId);
+
+
 }
 

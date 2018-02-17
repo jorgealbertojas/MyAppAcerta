@@ -19,6 +19,7 @@
     <string name="successfully_saved_purchase_message">TO-DO saved</string>
     <string name="loading">LOADING</string>
     <string name="menu_delete_purchase">Delete purchase</string>
+    <string name="menu_delete_task">Delete task</string>
 
 
     <string name="no_shopping_add">Add a purchase item +</string>

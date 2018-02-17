@@ -17,6 +17,8 @@ public interface AddPurchaseContract {
 
         void setQuantity(String quantity);
 
+        void setProductId(String productId);
+
         boolean isActive();
 
     }

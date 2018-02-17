@@ -100,11 +100,15 @@ public final class Purchase {
 
     @Nullable
     public String getTitleForList() {
-        if (!Strings.isNullOrEmpty(mId)) {
-            return mId;
+        if (!Strings.isNullOrEmpty(mNameProduct)) {
+            return mNameProduct;
         } else {
             return mNameProduct;
         }
+    }
+
+    public boolean isCompleted() {
+        return (mProductId != null);
     }
 
 

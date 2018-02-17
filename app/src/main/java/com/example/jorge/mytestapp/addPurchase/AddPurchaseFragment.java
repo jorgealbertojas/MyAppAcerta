@@ -38,9 +38,10 @@ public class AddPurchaseFragment extends Fragment implements AddPurchaseContract
 
     private TextView mProductId;
     private TextView mProductName;
+    private TextView mProductURL;
     private ImageView mProductImage;
 
-    private EditText mQuantity;
+    private TextView mQuantity;
 
     private static Product mProduct;
 
@@ -49,6 +50,15 @@ public class AddPurchaseFragment extends Fragment implements AddPurchaseContract
         return new AddPurchaseFragment();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.start();
+    }
+
+    public AddPurchaseFragment() {
+        // Required empty public constructor
+    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -60,8 +70,8 @@ public class AddPurchaseFragment extends Fragment implements AddPurchaseContract
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String user = getUserSehredPreference();
-                mPresenter.savePurchase(mProductId.getText().toString(),user,mQuantity.getText().toString(), mProductName.toString(),  mProduct.getUrl_image_big());
+                String user = getUserSharedPreference();
+                mPresenter.savePurchase( mProductId.getText().toString(),user,mQuantity.getText().toString(), mProductName.getText().toString(), mProductURL.getText().toString());
             }
         });
     }
@@ -72,14 +82,18 @@ public class AddPurchaseFragment extends Fragment implements AddPurchaseContract
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.add_purchase_fragment, container, false);
 
-        mQuantity = (EditText) root.findViewById(R.id.et_quantity);
 
+
+
+        mProductImage = (ImageView) root.findViewById(R.id.im_product_image);
         mProductName = (TextView) root.findViewById(R.id.tv_product_name);
         mProductId = (TextView) root.findViewById(R.id.tv_code);
-        mProductImage = (ImageView) root.findViewById(R.id.im_product_image);
+        mProductURL = (TextView) root.findViewById(R.id.tv_url);
 
+        mQuantity = (TextView) root.findViewById(R.id.et_quantity);
 
         ShowProduct(mProduct);
+
         setHasOptionsMenu(true);
         return root;
     }
@@ -100,11 +114,16 @@ public class AddPurchaseFragment extends Fragment implements AddPurchaseContract
         getActivity().finish();
     }
 
-
     @Override
     public void setQuantity(String quantity) {
         mQuantity.setText(quantity);
     }
+
+    @Override
+    public void setProductId(String productId) {
+        mProductId.setText(productId);
+    }
+
 
     @Override
     public boolean isActive() {
@@ -113,6 +132,7 @@ public class AddPurchaseFragment extends Fragment implements AddPurchaseContract
 
     public void ShowProduct(Product product){
         mProductName.setText(product.getName());
+        mProductURL.setText(product.getUrl_image_small());
         mProductId.setText(Integer.toString(product.getId()));
 
         Picasso.with(mProductImage.getContext())
@@ -122,7 +142,7 @@ public class AddPurchaseFragment extends Fragment implements AddPurchaseContract
                 .into(mProductImage);
     }
 
-    private String getUserSehredPreference(){
+    private String getUserSharedPreference(){
         SharedPreferences sp = getActivity().getSharedPreferences(SHARED_PREF_USER, MODE_PRIVATE);
         return sp.getString(SHARED_KEY_USER, null);
     }

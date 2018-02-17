@@ -83,7 +83,10 @@ public class AddPurchasePresenter implements AddPurchaseContract.Presenter, Shop
 
     @Override
     public void onDataNotAvailable() {
-
+        // The view may not be able to handle UI updates anymore
+        if (mAddPurchaseView.isActive()) {
+            mAddPurchaseView.showEmptyPurchaseError();
+        }
     }
 
 
