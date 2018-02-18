@@ -54,22 +54,15 @@ public class ShoppingRepository implements ShoppingDataSource{
     public void getFind(@NonNull final FindShoppingCallback callback, final String partName) {
         checkNotNull(callback);
 
-        // Respond immediately with cache if available and not dirty
-        if (mCachedShopping != null && !mCacheIsDirty) {
-            callback.onFindLoaded(new ArrayList<>(mCachedShopping.values()));
-            return;
-        }
 
-        if (mCacheIsDirty) {
-            // If the cache is dirty we need to fetch new data from the network.
-            getFindFromRemoteDataSource(callback,partName);
-        } else {
+
+        if (true) {
             // Query the local storage if available. If not, query the network.
             mShoppingLocalDataSource.getFind(new FindShoppingCallback() {
 
                 @Override
                 public void onFindLoaded(List<Purchase> purchaseList) {
-                    refreshCache(purchaseList);
+                    refreshCacheFind(purchaseList);
                     callback.onFindLoaded(new ArrayList<>(mCachedShopping.values()));
                 }
 
@@ -267,7 +260,7 @@ public class ShoppingRepository implements ShoppingDataSource{
 
             @Override
             public void onFindLoaded(List<Purchase> purchaseList) {
-                refreshCache(purchaseList);
+                refreshCacheFind(purchaseList);
                 refreshLocalDataSource(purchaseList);
                 callback.onFindLoaded(new ArrayList<>(mCachedShopping.values()));
             }
@@ -282,6 +275,20 @@ public class ShoppingRepository implements ShoppingDataSource{
 
 
 
+
+    private void refreshCacheFind(List<Purchase> purchaseList) {
+        if (mCachedShopping == null) {
+            mCachedShopping = new LinkedHashMap<>();
+        }
+
+
+
+        mCachedShopping.clear();
+        for (Purchase purchase : purchaseList) {
+            mCachedShopping.put(purchase.getId(), purchase);
+        }
+        mCacheIsDirty = false;
+    }
 
     private void refreshCache(List<Purchase> purchaseList) {
         if (mCachedShopping == null) {

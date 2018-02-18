@@ -31,7 +31,7 @@ public class FakeShoppingRemoteDataSource implements ShoppingDataSource {
 
     @Override
     public void getFind(@NonNull FindShoppingCallback callback, String partName) {
-
+        callback.onFindLoaded(Lists.newArrayList(TASKS_SERVICE_DATA.values()));
     }
 
     @Override

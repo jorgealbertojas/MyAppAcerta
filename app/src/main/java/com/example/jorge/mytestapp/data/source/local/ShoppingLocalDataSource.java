@@ -12,9 +12,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.List;
 
-
-
-
 /**
  * Created by jorge on 15/02/2018.
  */
@@ -82,7 +79,7 @@ public class ShoppingLocalDataSource implements ShoppingDataSource {
                 Runnable runnable = new Runnable() {
                         @Override
                         public void run() {
-                                final List<Purchase> shopping = mShoppingDao.getFind(partName);
+                                final List<Purchase> shopping = mShoppingDao.getFind("%"+ partName + "%");
                                 mAppExecutors.mainThread().execute(new Runnable() {
                                         @Override
                                         public void run() {

@@ -119,20 +119,22 @@ public class ShoppingPresenter implements ShoppingContract.Presenter {
 
     private void findShopping(String partName) {
         if (true) {
-            mShoppingView.setLoadingIndicator(true);
+     //       mShoppingView.setLoadingIndicator(true);
         }
         if (true) {
-            mShoppingRepository.refreshShopping();
+      //      mShoppingRepository.refreshShopping();
         }
 
         // The network request might be handled in a different thread so make sure Espresso knows
         // that the app is busy until the response is handled.
         EspressoIdlingResource.increment(); // App is busy until further notice
 
-        mShoppingRepository.getShopping(new ShoppingDataSource.LoadShoppingCallback() {
+        mShoppingRepository.getFind(new ShoppingDataSource.FindShoppingCallback() {
+
+
 
             @Override
-            public void onShoppingLoaded(List<Purchase> purchaseList) {
+            public void onFindLoaded(List<Purchase> purchaseList) {
                 List<Purchase> tasksToShow = new ArrayList<Purchase>();
 
                 // This callback may be called twice, once for the cache and once for loading
@@ -166,7 +168,7 @@ public class ShoppingPresenter implements ShoppingContract.Presenter {
                 }
                 mShoppingView.showLoadingShoppingError();
             }
-        });
+        },partName);
     }
 
 

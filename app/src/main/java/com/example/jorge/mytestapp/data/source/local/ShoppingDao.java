@@ -30,7 +30,7 @@ public interface ShoppingDao {
     Purchase getPurchaseById(String shoppingId);
 
 
-    @Query("SELECT * FROM Shopping WHERE nameProduct like ''%:partName%'' ")
+    @Query("SELECT * FROM Shopping WHERE nameProduct like :partName ")
     List<Purchase> getFind(String partName);
 
     /**
@@ -39,13 +39,7 @@ public interface ShoppingDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertPurchase(Purchase purchase);
 
-    /**
-     * Update a Purchase.
-     */
-    @Update
-    int updatePurchase(Purchase purchase);
-
-    /**
+     /**
      * Update the complete status of a Purchase
      */
     @Query("UPDATE Shopping SET quantity = :quantity WHERE entryid = :shoppingId ")

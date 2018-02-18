@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -16,6 +17,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.example.jorge.mytestapp.R;
@@ -46,6 +48,7 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
     private ShoppingContract.Presenter mPresenter;
 
     private ShoppingAdapter mListAdapter;
+    private ShoppingAdapter mListAdapterFind;
 
     private View mNoShoppingView;
 
@@ -61,9 +64,15 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
 
     private static Product mProduct;
 
+    private static ListView mListView;
+    private static SearchView mSearchView;
 
-    public static ShoppingFragment newInstance(Product product) {
+
+
+
+    public static ShoppingFragment newInstance(Product product, SearchView searchView) {
         mProduct = product;
+        mSearchView = searchView;
         return new ShoppingFragment();
     }
 
@@ -73,6 +82,7 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mListAdapter = new ShoppingAdapter(new ArrayList<Purchase>(0), mItemListener);
+        mListAdapterFind = new ShoppingAdapter(new ArrayList<Purchase>(0), mItemListener);
     }
 
     /**
@@ -108,6 +118,8 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
         mPresenter.start();
     }
 
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -115,8 +127,8 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
         View root = inflater.inflate(R.layout.shopping_fragment, container, false);
 
         // Set up Shopping view
-        ListView listView = (ListView) root.findViewById(R.id.lv_shopping);
-        listView.setAdapter(mListAdapter);
+        mListView = (ListView) root.findViewById(R.id.lv_shopping);
+        mListView.setAdapter(mListAdapter);
 
         mShoppingView = (LinearLayout) root.findViewById(R.id.ll_shopping);
 
@@ -135,6 +147,10 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
         mProductImage = (ImageView) root.findViewById(R.id.im_product_image);
         mProductName = (TextView) root.findViewById(R.id.tv_product_name);
         mCode = (TextView) root.findViewById(R.id.tv_code);
+
+
+        //mSearchView = getActivity().findViewById(R.id.se)
+       // mSearchView.setOnQueryTextListener(this);
 
         showProduct(mProduct);
 
@@ -159,7 +175,7 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
                 ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark)
         );
         // Set the scrolling view in the custom SwipeRefreshLayout.
-        swipeRefreshLayout.setScrollUpChild(listView);
+        swipeRefreshLayout.setScrollUpChild(mListView);
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -210,6 +226,9 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
 
     @Override
     public void showShopping(List<Purchase> listPurchase) {
+
+        //mListView.setAdapter(mListAdapter);
+
         mListAdapter.replaceData(listPurchase);
 
         mShoppingView.setVisibility(View.VISIBLE);
@@ -218,6 +237,9 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
 
     @Override
     public void showFind(List<Purchase> listPurchase) {
+
+        //mListView.setAdapter(mListAdapterFind);
+
         mListAdapter.replaceData(listPurchase);
 
         mShoppingView.setVisibility(View.VISIBLE);
@@ -333,6 +355,8 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
         mNoShoppingIcon.setImageDrawable(getResources().getDrawable(iconRes));
         mNoShoppingAddView.setVisibility(showAddView ? View.VISIBLE : View.GONE);
     }
+
+
 
     private static class ShoppingAdapter extends BaseAdapter {
 
