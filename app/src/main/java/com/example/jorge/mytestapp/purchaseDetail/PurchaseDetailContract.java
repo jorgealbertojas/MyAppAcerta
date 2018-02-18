@@ -2,7 +2,7 @@ package com.example.jorge.mytestapp.purchaseDetail;
 
 import com.example.jorge.mytestapp.BasePresenter;
 import com.example.jorge.mytestapp.BaseView;
-import com.example.jorge.mytestapp.data.source.remote.model.Product;
+import com.example.jorge.mytestapp.data.source.onLine.model.Product;
 
 /**
  * Created by jorge on 15/02/2018.

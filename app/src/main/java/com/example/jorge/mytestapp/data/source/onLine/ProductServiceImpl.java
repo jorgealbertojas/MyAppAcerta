@@ -1,7 +1,7 @@
-package com.example.jorge.mytestapp.data.source.remote;
+package com.example.jorge.mytestapp.data.source.onLine;
 
-import com.example.jorge.mytestapp.data.source.remote.model.ListProduct;
-import com.example.jorge.mytestapp.data.source.remote.model.Product;
+import com.example.jorge.mytestapp.data.source.onLine.model.ListProduct;
+import com.example.jorge.mytestapp.data.source.onLine.model.Product;
 
 import retrofit2.Call;
 import retrofit2.Callback;

@@ -2,7 +2,6 @@ package com.example.jorge.mytestapp.shopping;
 
 import android.app.SearchManager;
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.VisibleForTesting;
 import android.support.test.espresso.IdlingResource;
 import android.support.v4.view.GravityCompat;
@@ -18,7 +17,7 @@ import android.widget.SearchView;
 
 import com.example.jorge.mytestapp.Injection;
 import com.example.jorge.mytestapp.R;
-import com.example.jorge.mytestapp.data.source.remote.model.Product;
+import com.example.jorge.mytestapp.data.source.onLine.model.Product;
 import com.example.jorge.mytestapp.util.ActivityUtils;
 import com.example.jorge.mytestapp.util.EspressoIdlingResource;
 
@@ -37,13 +36,16 @@ public class ShoppingActivity extends AppCompatActivity implements SearchView.On
     private SearchView mSearchView;
     private MenuItem mSearchMenuItem;
 
+    private Toolbar mToolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+
         // Set up the navigation drawer.
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerLayout.setStatusBarBackground(R.color.colorPrimaryDark);
@@ -51,7 +53,7 @@ public class ShoppingActivity extends AppCompatActivity implements SearchView.On
         mBundle = getIntent().getBundleExtra(EXTRA_BUNDLE_PRODUCT);
         mProduct = (Product) mBundle.getSerializable(EXTRA_PRODUCT);
 
-
+        setActionBar();
 
         // Load previously saved state, if available.
         if (savedInstanceState != null) {
@@ -74,7 +76,11 @@ public class ShoppingActivity extends AppCompatActivity implements SearchView.On
 
         mSearchView.setSearchableInfo(searchManager.
                 getSearchableInfo(getComponentName()));
+
         mSearchView.setSubmitButtonEnabled(true);
+
+        mSearchMenuItem.setEnabled(true);
+
 
         mSearchView.setOnQueryTextListener(this);
 
@@ -147,6 +153,24 @@ public class ShoppingActivity extends AppCompatActivity implements SearchView.On
         }
 
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    private void setActionBar() {
+
+      /*  getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setTitle("Friends");
+
+
+        Typeface typeface = Typeface.createFromAsset(this.getAssets(), "fonts/vegur_2.otf");
+        int titleId = getResources().getIdentifier("action_bar_title", "id", "android");
+        TextView actionBarTitle = (TextView) (this.findViewById(titleId));
+        actionBarTitle.setTextColor(getResources().getColor(R.color.colorAccent));
+        actionBarTitle.setTypeface(typeface);*/
     }
 }
 

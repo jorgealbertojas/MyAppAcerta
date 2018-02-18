@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import com.example.jorge.mytestapp.BasePresenter;
 import com.example.jorge.mytestapp.BaseView;
 import com.example.jorge.mytestapp.data.Purchase;
-import com.example.jorge.mytestapp.data.source.remote.model.Product;
 
 import java.util.List;
 

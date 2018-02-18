@@ -2,9 +2,9 @@ package com.example.jorge.mytestapp.products;
 
 import android.support.annotation.NonNull;
 
-import com.example.jorge.mytestapp.data.source.remote.ProductServiceApi;
-import com.example.jorge.mytestapp.data.source.remote.model.ListProduct;
-import com.example.jorge.mytestapp.data.source.remote.model.Product;
+import com.example.jorge.mytestapp.data.source.onLine.ProductServiceApi;
+import com.example.jorge.mytestapp.data.source.onLine.model.ListProduct;
+import com.example.jorge.mytestapp.data.source.onLine.model.Product;
 
 /**
  * Created by jorge on 14/02/2018.

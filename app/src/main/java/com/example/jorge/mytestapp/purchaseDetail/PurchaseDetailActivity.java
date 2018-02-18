@@ -7,11 +7,9 @@ import android.support.v7.widget.Toolbar;
 
 import com.example.jorge.mytestapp.Injection;
 import com.example.jorge.mytestapp.R;
-import com.example.jorge.mytestapp.data.source.remote.model.Product;
+import com.example.jorge.mytestapp.data.source.onLine.model.Product;
 import com.example.jorge.mytestapp.util.ActivityUtils;
 
-import static com.example.jorge.mytestapp.products.ProductFragment.EXTRA_BUNDLE_PRODUCT;
-import static com.example.jorge.mytestapp.products.ProductFragment.EXTRA_PRODUCT;
 import static com.example.jorge.mytestapp.shopping.ShoppingFragment.EXTRA_BUNDLE_SHOPPING_SHOPPING;
 import static com.example.jorge.mytestapp.shopping.ShoppingFragment.EXTRA_PRODUCT_SHOPPING;
 import static com.example.jorge.mytestapp.shopping.ShoppingFragment.EXTRA_SHOPPING_ID;

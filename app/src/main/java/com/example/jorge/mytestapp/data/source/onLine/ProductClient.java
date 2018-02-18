@@ -1,4 +1,4 @@
-package com.example.jorge.mytestapp.data.source.remote;
+package com.example.jorge.mytestapp.data.source.onLine;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

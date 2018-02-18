@@ -12,8 +12,7 @@ import com.example.jorge.mytestapp.R;
 
 import com.example.jorge.mytestapp.Injection;
 
-import com.example.jorge.mytestapp.data.source.local.ShoppingDao;
-import com.example.jorge.mytestapp.data.source.remote.model.Product;
+import com.example.jorge.mytestapp.data.source.onLine.model.Product;
 import com.example.jorge.mytestapp.util.ActivityUtils;
 
 import com.example.jorge.mytestapp.util.EspressoIdlingResource;

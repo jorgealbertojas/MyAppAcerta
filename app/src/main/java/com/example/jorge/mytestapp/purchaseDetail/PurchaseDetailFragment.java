@@ -13,21 +13,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.jorge.mytestapp.R;
 import com.example.jorge.mytestapp.addPurchase.AddPurchaseActivity;
-import com.example.jorge.mytestapp.addPurchase.AddPurchaseFragment;
-import com.example.jorge.mytestapp.data.source.remote.model.Product;
-import com.google.common.base.Preconditions;
+import com.example.jorge.mytestapp.data.source.onLine.model.Product;
 
 import static com.example.jorge.mytestapp.addPurchase.AddPurchaseFragment.ARGUMENT_EDIT_SHOPPING_ID;
 import static com.example.jorge.mytestapp.shopping.ShoppingFragment.EXTRA_BUNDLE_PRODUCT_SHOPPING;
-import static com.example.jorge.mytestapp.shopping.ShoppingFragment.EXTRA_BUNDLE_SHOPPING_SHOPPING;
 import static com.example.jorge.mytestapp.shopping.ShoppingFragment.EXTRA_PRODUCT_SHOPPING;
-import static com.example.jorge.mytestapp.shopping.ShoppingFragment.EXTRA_SHOPPING_ID;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**

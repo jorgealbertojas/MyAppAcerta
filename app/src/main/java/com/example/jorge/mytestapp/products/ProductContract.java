@@ -2,7 +2,7 @@ package com.example.jorge.mytestapp.products;
 
 import android.support.annotation.NonNull;
 
-import com.example.jorge.mytestapp.data.source.remote.model.Product;
+import com.example.jorge.mytestapp.data.source.onLine.model.Product;
 
 import java.util.List;
 

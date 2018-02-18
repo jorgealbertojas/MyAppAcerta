@@ -16,12 +16,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.jorge.mytestapp.R;
-import com.example.jorge.mytestapp.data.source.remote.ProductServiceImpl;
-import com.example.jorge.mytestapp.data.source.remote.model.Product;
+import com.example.jorge.mytestapp.data.source.onLine.ProductServiceImpl;
+import com.example.jorge.mytestapp.data.source.onLine.model.Product;
 import com.example.jorge.mytestapp.shopping.ShoppingActivity;
 import com.squareup.picasso.Picasso;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 

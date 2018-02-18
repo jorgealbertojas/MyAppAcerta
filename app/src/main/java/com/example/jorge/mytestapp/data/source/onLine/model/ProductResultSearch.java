@@ -1,4 +1,4 @@
-package com.example.jorge.mytestapp.data.source.remote.model;
+package com.example.jorge.mytestapp.data.source.onLine.model;
 
 
 import java.util.List;

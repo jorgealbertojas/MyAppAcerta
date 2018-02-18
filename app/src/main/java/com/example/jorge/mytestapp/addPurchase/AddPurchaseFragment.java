@@ -1,8 +1,6 @@
 package com.example.jorge.mytestapp.addPurchase;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,7 +19,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import android.support.design.widget.Snackbar;
 
 import com.example.jorge.mytestapp.R;
-import com.example.jorge.mytestapp.data.source.remote.model.Product;
+import com.example.jorge.mytestapp.data.source.onLine.model.Product;
 import com.squareup.picasso.Picasso;
 
 /**

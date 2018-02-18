@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import com.example.jorge.mytestapp.data.Purchase;
 import com.example.jorge.mytestapp.data.source.ShoppingDataSource;
 import com.example.jorge.mytestapp.data.source.ShoppingRepository;
-import com.example.jorge.mytestapp.data.source.remote.model.Product;
+import com.example.jorge.mytestapp.data.source.onLine.model.Product;
 import com.google.common.base.Strings;
 
 import static com.google.common.base.Preconditions.checkNotNull;
