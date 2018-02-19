@@ -1,9 +1,6 @@
 package com.example.jorge.mytestapp.login;
 
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import android.annotation.SuppressLint;
 import android.content.res.ColorStateList;
 import android.content.res.XmlResourceParser;
@@ -21,8 +18,12 @@ import com.example.jorge.mytestapp.R;
 import com.example.jorge.mytestapp.util.CustomToast;
 import com.example.jorge.mytestapp.util.Util;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Created by jorge on 18/02/2018.
+ * Fragment login forgot password
  */
 
 public class ForgotPasswordFragment extends Fragment implements

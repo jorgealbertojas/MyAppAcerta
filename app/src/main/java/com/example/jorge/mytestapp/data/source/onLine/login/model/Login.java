@@ -2,6 +2,7 @@ package com.example.jorge.mytestapp.data.source.onLine.login.model;
 
 /**
  * Created by jorge on 18/02/2018.
+ * Model login
  */
 
 public class Login {

@@ -34,6 +34,7 @@ import static com.example.jorge.mytestapp.products.ProductActivity.SHARED_PREF_U
 
 /**
  * Created by jorge on 18/02/2018.
+ * Fragment implements Contract
  */
 
 public class SignUpFragment extends Fragment implements OnClickListener, LoginContract.View {

@@ -8,6 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by jorge on 18/02/2018.
+ * Client for access Api with retrofit
  */
 
 public class LoginClient {

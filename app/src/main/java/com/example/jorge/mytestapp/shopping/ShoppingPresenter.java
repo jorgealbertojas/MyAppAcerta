@@ -16,6 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Created by jorge on 15/02/2018.
+ * Presenter for get information Shopping
  */
 
 public class ShoppingPresenter implements ShoppingContract.Presenter {
@@ -119,12 +120,6 @@ public class ShoppingPresenter implements ShoppingContract.Presenter {
     }
 
     private void findShopping(String partName) {
-        if (true) {
-     //       mShoppingView.setLoadingIndicator(true);
-        }
-        if (true) {
-      //      mShoppingRepository.refreshShopping();
-        }
 
         // The network request might be handled in a different thread so make sure Espresso knows
         // that the app is busy until the response is handled.
@@ -208,9 +203,6 @@ public class ShoppingPresenter implements ShoppingContract.Presenter {
 
     @Override
     public void clearCompletedShopping() {
-        //mShoppingRepository.clearCompleted();
-        // mTasksView.showCompletedTasksCleared();
-        // loadTasks(false, false);
     }
 
 
@@ -227,7 +219,6 @@ public class ShoppingPresenter implements ShoppingContract.Presenter {
     }
 
     private void showFilterLabel() {
-      //  mShoppingView.showAllFilterLabel();
     }
 
     private void processEmptyTasks() {

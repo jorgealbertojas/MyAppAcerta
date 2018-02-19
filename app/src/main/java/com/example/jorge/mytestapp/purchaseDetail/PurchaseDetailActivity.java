@@ -1,8 +1,8 @@
 package com.example.jorge.mytestapp.purchaseDetail;
 
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
 import com.example.jorge.mytestapp.Injection;
@@ -15,7 +15,6 @@ import static com.example.jorge.mytestapp.shopping.ShoppingFragment.EXTRA_PRODUC
 import static com.example.jorge.mytestapp.shopping.ShoppingFragment.EXTRA_SHOPPING_ID;
 
 public class PurchaseDetailActivity extends AppCompatActivity {
-
 
 
     private Product mProduct;
@@ -44,7 +43,7 @@ public class PurchaseDetailActivity extends AppCompatActivity {
         mProduct = (Product) mBundle.getSerializable(EXTRA_PRODUCT_SHOPPING);
 
         if (PurchaseDetailFragment == null) {
-            PurchaseDetailFragment = PurchaseDetailFragment.newInstance(shoppingId,mProduct);
+            PurchaseDetailFragment = PurchaseDetailFragment.newInstance(shoppingId, mProduct);
 
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
                     PurchaseDetailFragment, R.id.contentFrame);
@@ -53,7 +52,7 @@ public class PurchaseDetailActivity extends AppCompatActivity {
         // Create the presenter
         new PurchaseDetailPresenter(
                 Injection.provideShoppingRepository(getApplicationContext()),
-                PurchaseDetailFragment, shoppingId,mProduct);
+                PurchaseDetailFragment, shoppingId, mProduct);
     }
 
     @Override

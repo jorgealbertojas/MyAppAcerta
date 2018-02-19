@@ -5,6 +5,7 @@ import com.example.jorge.mytestapp.BaseView;
 
 /**
  * Created by jorge on 15/02/2018.
+ * Contract for Add Purchase
  */
 
 public interface AddPurchaseContract {

@@ -2,13 +2,10 @@ package com.example.jorge.mytestapp.data.source.onLine.model;
 
 /**
  * Created by jorge on 14/02/2018.
+ * Model Product data the json
  */
 
 import java.io.Serializable;
-
-/**
- * Created by jorge on 14/02/2018.
- */
 
 public class Product implements Serializable {
 

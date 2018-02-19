@@ -8,6 +8,7 @@ import retrofit2.http.POST;
 
 /**
  * Created by jorge on 18/02/2018.
+ * Get the product for api json
  */
 
 public interface LoginEndpoint {

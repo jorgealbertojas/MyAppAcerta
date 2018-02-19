@@ -1,20 +1,17 @@
 package com.example.jorge.mytestapp.addPurchase;
 
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
 import android.support.test.espresso.IdlingResource;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
-import com.example.jorge.mytestapp.R;
-
 import com.example.jorge.mytestapp.Injection;
-
+import com.example.jorge.mytestapp.R;
 import com.example.jorge.mytestapp.data.source.onLine.model.Product;
 import com.example.jorge.mytestapp.util.ActivityUtils;
-
 import com.example.jorge.mytestapp.util.EspressoIdlingResource;
 
 import static com.example.jorge.mytestapp.shopping.ShoppingFragment.EXTRA_BUNDLE_PRODUCT_SHOPPING;
@@ -44,11 +41,6 @@ public class AddPurchaseActivity extends AppCompatActivity {
         mActionBar = getSupportActionBar();
         mActionBar.setDisplayHomeAsUpEnabled(true);
         mActionBar.setDisplayShowHomeEnabled(true);
-
-
-
-
-
 
         AddPurchaseFragment addPurchaseFragment = (AddPurchaseFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.contentFrame);

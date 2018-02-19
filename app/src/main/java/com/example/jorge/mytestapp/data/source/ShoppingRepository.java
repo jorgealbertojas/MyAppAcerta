@@ -13,6 +13,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Created by jorge on 15/02/2018.
+ * Data Source for repository data
  */
 
 public class ShoppingRepository implements ShoppingDataSource{
@@ -76,16 +77,7 @@ public class ShoppingRepository implements ShoppingDataSource{
     public void getShopping(@NonNull final LoadShoppingCallback callback) {
         checkNotNull(callback);
 
-        // Respond immediately with cache if available and not dirty
-        //if (mCachedShopping != null && !mCacheIsDirty) {
-        //    callback.onShoppingLoaded(new ArrayList<>(mCachedShopping.values()));
-        //    return;
-        //}
 
-       // if (mCacheIsDirty) {
-            // If the cache is dirty we need to fetch new data from the network.
-       //     getShoppingFromRemoteDataSource(callback);
-       // } else {
             // Query the local storage if available. If not, query the network.
             mShoppingLocalDataSource.getShopping(new LoadShoppingCallback() {
 
@@ -110,15 +102,6 @@ public class ShoppingRepository implements ShoppingDataSource{
 
         final Purchase cachedPurchase = getPurchaseWithId(shoppingId);
 
-        // Respond immediately with cache if available
-       // if (cachedPurchase != null) {
-       //     callback.onPurchaseLoaded(cachedPurchase);
-      //      return;
-      //  }
-
-        // Load from server/persisted if needed.
-
-        // Is the task in the local data source? If not, query the network.
         mShoppingLocalDataSource.getPurchase(shoppingId, new GetPurchaseCallback() {
             @Override
             public void onPurchaseLoaded(Purchase purchase) {
@@ -214,7 +197,6 @@ public class ShoppingRepository implements ShoppingDataSource{
         mShoppingLocalDataSource.deletePurchase(checkNotNull(shoppingId));
         mCachedShopping.remove(shoppingId);
     }
-
 
 
     @Override

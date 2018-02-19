@@ -8,6 +8,7 @@ import java.util.List;
 
 /**
  * Created by jorge on 14/02/2018.
+ * Contract View and Present fro product
  */
 
 public interface ProductContract {

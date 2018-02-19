@@ -6,9 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.Loader;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
@@ -18,7 +16,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.example.jorge.mytestapp.R;
@@ -35,6 +32,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Created by jorge on 15/02/2018.
+ * Fragment for implements contract Shopping
  */
 
 public class ShoppingFragment extends Fragment implements ShoppingContract.View {

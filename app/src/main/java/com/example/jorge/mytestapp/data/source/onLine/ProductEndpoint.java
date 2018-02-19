@@ -8,6 +8,7 @@ import retrofit2.http.GET;
 
 /**
  * Created by jorge on 14/02/2018.
+ * Endpoint for access the Json
  */
 
 public interface ProductEndpoint {

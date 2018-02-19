@@ -9,6 +9,7 @@ import retrofit2.Response;
 
 /**
  * Created by jorge on 14/02/2018.
+ * Service product information
  */
 
 public class ProductServiceImpl implements ProductServiceApi {

@@ -10,6 +10,7 @@ import java.util.List;
 
 /**
  * Created by jorge on 15/02/2018.
+ * Contract for definition information
  */
 
 public interface ShoppingContract{

@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,18 +13,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import static android.content.Context.MODE_PRIVATE;
-import static com.example.jorge.mytestapp.products.ProductActivity.SHARED_KEY_USER;
-import static com.example.jorge.mytestapp.products.ProductActivity.SHARED_PREF_USER;
-import static com.google.common.base.Preconditions.checkNotNull;
-import android.support.design.widget.Snackbar;
-
 import com.example.jorge.mytestapp.R;
 import com.example.jorge.mytestapp.data.source.onLine.model.Product;
 import com.squareup.picasso.Picasso;
 
+import static android.content.Context.MODE_PRIVATE;
+import static com.example.jorge.mytestapp.products.ProductActivity.SHARED_KEY_USER;
+import static com.example.jorge.mytestapp.products.ProductActivity.SHARED_PREF_USER;
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Created by jorge on 15/02/2018.
+ * Fragment for add Purchase
  */
 
 public class AddPurchaseFragment extends Fragment implements AddPurchaseContract.View {

@@ -8,6 +8,7 @@ import com.example.jorge.mytestapp.data.source.ShoppingDataSource;
 
 /**
  * Created by jorge on 15/02/2018.
+ * Presenter for add Purchase
  */
 
 public class AddPurchasePresenter implements AddPurchaseContract.Presenter, ShoppingDataSource.GetPurchaseCallback{
@@ -76,7 +77,6 @@ public class AddPurchasePresenter implements AddPurchaseContract.Presenter, Shop
         // The view may not be able to handle UI updates anymore
         if (mAddPurchaseView.isActive()) {
             mAddPurchaseView.setQuantity(purchase.getQuantity());
-            //mAddPurchaseView.setDescription(task.getDescription());
         }
         mIsDataMissing = false;
     }

@@ -28,9 +28,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Created by jorge on 16/02/2018.
+ * Fragment implements Contract of the purchase
  */
 
-public class PurchaseDetailFragment extends Fragment implements PurchaseDetailContract.View{
+public class PurchaseDetailFragment extends Fragment implements PurchaseDetailContract.View {
 
     @NonNull
     private static final String ARGUMENT_PRODUCT_ID = "PRODUCT_ID";
@@ -50,7 +51,6 @@ public class PurchaseDetailFragment extends Fragment implements PurchaseDetailCo
     private Product mProduct;
 
     private String mUrl;
-
 
 
     public static PurchaseDetailFragment newInstance(@Nullable String shoppingId, Product product) {
@@ -82,8 +82,6 @@ public class PurchaseDetailFragment extends Fragment implements PurchaseDetailCo
         mUser = (TextView) root.findViewById(R.id.tv_user);
 
         mImage = (ImageView) root.findViewById(R.id.im_product_image);
-
-
 
 
         // Set up floating action button
@@ -125,7 +123,6 @@ public class PurchaseDetailFragment extends Fragment implements PurchaseDetailCo
     public void showName(String name) {
         mName.setVisibility(View.VISIBLE);
         mName.setText(name);
-
 
 
     }
@@ -194,7 +191,7 @@ public class PurchaseDetailFragment extends Fragment implements PurchaseDetailCo
 
         mProduct = product;
 
-        if (mProduct == null){
+        if (mProduct == null) {
             mProduct = new Product();
             mProduct.setId(Integer.parseInt(mProductId.getText().toString()));
             mProduct.setUrl_image_small(mUrl);
@@ -203,7 +200,7 @@ public class PurchaseDetailFragment extends Fragment implements PurchaseDetailCo
         }
 
         Bundle bundle = new Bundle();
-        bundle.putSerializable(EXTRA_PRODUCT_SHOPPING, mProduct );
+        bundle.putSerializable(EXTRA_PRODUCT_SHOPPING, mProduct);
 
         // in it's own Activity, since it makes more sense that way and it gives us the flexibility
         // to show some Intent stubbing.
@@ -212,7 +209,6 @@ public class PurchaseDetailFragment extends Fragment implements PurchaseDetailCo
         intent.putExtra(EXTRA_BUNDLE_PRODUCT_SHOPPING, bundle);
         startActivity(intent);
     }
-
 
 
     @Override

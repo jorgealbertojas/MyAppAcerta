@@ -8,6 +8,7 @@ import com.example.jorge.mytestapp.data.source.onLine.model.Product;
 
 /**
  * Created by jorge on 14/02/2018.
+ * Presenter of the product implements contract
  */
 
 public class ProductPresenter implements ProductContract.UserActionsListener {

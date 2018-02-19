@@ -53,14 +53,7 @@ public class ShoppingActivity extends AppCompatActivity implements SearchView.On
         mBundle = getIntent().getBundleExtra(EXTRA_BUNDLE_PRODUCT);
         mProduct = (Product) mBundle.getSerializable(EXTRA_PRODUCT);
 
-        setActionBar();
 
-        // Load previously saved state, if available.
-        if (savedInstanceState != null) {
-           // TasksFilterType currentFiltering =
-          //          (TasksFilterType) savedInstanceState.getSerializable(CURRENT_FILTERING_KEY);
-         //   mTasksPresenter.setFiltering(currentFiltering);
-        }
     }
 
     @Override
@@ -155,23 +148,7 @@ public class ShoppingActivity extends AppCompatActivity implements SearchView.On
         return true;
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
 
-    private void setActionBar() {
-
-      /*  getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setTitle("Friends");
-
-
-        Typeface typeface = Typeface.createFromAsset(this.getAssets(), "fonts/vegur_2.otf");
-        int titleId = getResources().getIdentifier("action_bar_title", "id", "android");
-        TextView actionBarTitle = (TextView) (this.findViewById(titleId));
-        actionBarTitle.setTextColor(getResources().getColor(R.color.colorAccent));
-        actionBarTitle.setTypeface(typeface);*/
-    }
 }
 
 

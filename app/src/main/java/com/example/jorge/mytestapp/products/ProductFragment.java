@@ -27,6 +27,7 @@ import java.util.List;
 
 /**
  * Created by jorge on 14/02/2018.
+ * Fragment implements Contract product
  */
 
 public class ProductFragment extends Fragment implements ProductContract.View {

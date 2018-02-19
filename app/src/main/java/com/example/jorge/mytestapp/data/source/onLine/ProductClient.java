@@ -2,12 +2,12 @@ package com.example.jorge.mytestapp.data.source.onLine;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by jorge on 14/02/2018.
+ * Client Product for get data
  */
 
 public class ProductClient {

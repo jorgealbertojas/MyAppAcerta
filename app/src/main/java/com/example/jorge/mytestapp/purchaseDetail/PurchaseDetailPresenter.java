@@ -3,7 +3,6 @@ package com.example.jorge.mytestapp.purchaseDetail;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.example.jorge.mytestapp.R;
 import com.example.jorge.mytestapp.data.Purchase;
 import com.example.jorge.mytestapp.data.source.ShoppingDataSource;
 import com.example.jorge.mytestapp.data.source.ShoppingRepository;

@@ -6,6 +6,7 @@ import com.example.jorge.mytestapp.data.source.onLine.model.Product;
 
 /**
  * Created by jorge on 15/02/2018.
+ * Contract Purchase Detail View and presenter
  */
 
 public interface PurchaseDetailContract {

@@ -6,6 +6,7 @@ import com.example.jorge.mytestapp.data.source.onLine.login.model.Login;
 
 /**
  * Created by jorge on 18/02/2018.
+ * Presenter for support login
  */
 
 public class LoginPresenter implements LoginContract.Presenter {
