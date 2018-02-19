@@ -1,16 +1,14 @@
 package com.example.jorge.mytestapp.products;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
+
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
 import com.example.jorge.mytestapp.R;
-import com.example.jorge.mytestapp.login.LoginActivity;
+import com.example.jorge.mytestapp.util.Common;
+
 
 
 public class ProductActivity extends AppCompatActivity {
@@ -20,6 +18,8 @@ public class ProductActivity extends AppCompatActivity {
     public static String SHARED_KEY_USER = "SHARED_KEY_USER";
     public static String SHARED_KEY_PASSWORD = "SHARED_KEY_PASSWORD";
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -28,13 +28,15 @@ public class ProductActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.product_activity);
 
+
+
         if (null == savedInstanceState) {
-            initFragment(ProductFragment.newInstance());
+            if (Common.isOnline(this)) {
+                initFragment(ProductFragment.newInstance());
+            }
         }
 
-        Intent intent = new Intent(this, LoginActivity.class);
 
-        startActivity(intent);
 
 
     }

@@ -69,7 +69,6 @@ public interface ShoppingContract{
 
         void clearCompletedShopping();
 
-
     }
 }
 

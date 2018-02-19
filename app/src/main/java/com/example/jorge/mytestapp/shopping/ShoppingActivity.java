@@ -91,7 +91,7 @@ public class ShoppingActivity extends AppCompatActivity implements SearchView.On
 
         if (shoppingFragment == null) {
             // Create the fragment
-            shoppingFragment = ShoppingFragment.newInstance(mProduct,mSearchView);
+            shoppingFragment = ShoppingFragment.newInstance(mProduct);
             ActivityUtils.addFragmentToActivity(
                     getSupportFragmentManager(), shoppingFragment, R.id.contentFrame);
         }

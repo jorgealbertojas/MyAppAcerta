@@ -13,11 +13,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.jorge.mytestapp.R;
 import com.example.jorge.mytestapp.addPurchase.AddPurchaseActivity;
 import com.example.jorge.mytestapp.data.source.onLine.model.Product;
+import com.squareup.picasso.Picasso;
 
 import static com.example.jorge.mytestapp.addPurchase.AddPurchaseFragment.ARGUMENT_EDIT_SHOPPING_ID;
 import static com.example.jorge.mytestapp.shopping.ShoppingFragment.EXTRA_BUNDLE_PRODUCT_SHOPPING;
@@ -42,10 +44,12 @@ public class PurchaseDetailFragment extends Fragment implements PurchaseDetailCo
     private TextView mName;
     private TextView mQuantity;
     private TextView mProductId;
-    private TextView mUrl;
     private TextView mUser;
+    private ImageView mImage;
 
     private Product mProduct;
+
+    private String mUrl;
 
 
 
@@ -74,8 +78,10 @@ public class PurchaseDetailFragment extends Fragment implements PurchaseDetailCo
         mName = (TextView) root.findViewById(R.id.tv_product_name);
         mQuantity = (TextView) root.findViewById(R.id.tv_quantity);
         mProductId = (TextView) root.findViewById(R.id.tv_code);
-        mUrl = (TextView) root.findViewById(R.id.tv_url);
+
         mUser = (TextView) root.findViewById(R.id.tv_user);
+
+        mImage = (ImageView) root.findViewById(R.id.im_product_image);
 
 
 
@@ -119,6 +125,9 @@ public class PurchaseDetailFragment extends Fragment implements PurchaseDetailCo
     public void showName(String name) {
         mName.setVisibility(View.VISIBLE);
         mName.setText(name);
+
+
+
     }
 
     @Override
@@ -139,13 +148,17 @@ public class PurchaseDetailFragment extends Fragment implements PurchaseDetailCo
 
     @Override
     public void showUrl(String url) {
-        mUrl.setVisibility(View.VISIBLE);
-        mUrl.setText(url);
+        mUrl = url;
+        Picasso.with(mImage.getContext())
+                .load(url)
+                .fit().centerCrop()
+                .placeholder(R.mipmap.ic_launcher)
+                .into(mImage);
     }
 
     @Override
     public void hideUrl() {
-        mUrl.setVisibility(View.GONE);
+
     }
 
     @Override
@@ -180,6 +193,14 @@ public class PurchaseDetailFragment extends Fragment implements PurchaseDetailCo
     public void showEditPurchase(String shoppingId, Product product) {
 
         mProduct = product;
+
+        if (mProduct == null){
+            mProduct = new Product();
+            mProduct.setId(Integer.parseInt(mProductId.getText().toString()));
+            mProduct.setUrl_image_small(mUrl);
+            mProduct.setName(mName.toString());
+
+        }
 
         Bundle bundle = new Bundle();
         bundle.putSerializable(EXTRA_PRODUCT_SHOPPING, mProduct );

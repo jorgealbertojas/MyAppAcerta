@@ -5,6 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.content.res.XmlResourceParser;
@@ -31,6 +32,7 @@ import android.widget.TextView;
 
 import com.example.jorge.mytestapp.R;
 
+import com.example.jorge.mytestapp.products.ProductActivity;
 import com.example.jorge.mytestapp.util.CustomToast;
 import com.example.jorge.mytestapp.util.Util;
 
@@ -147,6 +149,8 @@ public class LoginFragment extends Fragment implements OnClickListener {
         switch (v.getId()) {
             case R.id.loginBtn:
                 if (checkValidation()){
+                    Intent intent = new Intent(getActivity(), ProductActivity.class);
+                    startActivity(intent);
                     getActivity().finish();
                 }
                 break;

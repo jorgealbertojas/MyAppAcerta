@@ -6,8 +6,11 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.Loader;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,31 +49,32 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
     private ShoppingContract.Presenter mPresenter;
 
     private ShoppingAdapter mListAdapter;
-    private ShoppingAdapter mListAdapterFind;
+
 
     private View mNoShoppingView;
 
     private LinearLayout mShoppingView;
-
-    private ImageView mNoShoppingIcon;
 
     private TextView mNoShoppingMainView;
     private TextView mNoShoppingAddView;
     private ImageView mProductImage;
     private TextView mCode;
     private TextView mProductName;
+    private FloatingActionButton mFab;
 
     private static Product mProduct;
 
     private static ListView mListView;
-    private static SearchView mSearchView;
+    private static CardView mCarView;
 
+    private static final int LOADER_ID = 101;
 
+    public static ShoppingFragment newInstance() {
+        return new ShoppingFragment();
+    }
 
-
-    public static ShoppingFragment newInstance(Product product, SearchView searchView) {
+    public static ShoppingFragment newInstance(Product product) {
         mProduct = product;
-        mSearchView = searchView;
         return new ShoppingFragment();
     }
 
@@ -80,8 +84,9 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mListAdapter = new ShoppingAdapter(new ArrayList<Purchase>(0), mItemListener);
-        mListAdapterFind = new ShoppingAdapter(new ArrayList<Purchase>(0), mItemListener);
-    }
+
+
+      }
 
     /**
      * Listener for clicks on shopping in the ListView.
@@ -105,6 +110,9 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
 
     };
 
+
+
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         mPresenter.result(requestCode, resultCode);
@@ -114,6 +122,7 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
     public void onResume() {
         super.onResume();
         mPresenter.start();
+
     }
 
 
@@ -132,7 +141,7 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
 
         // Set up  no Shopping view
         mNoShoppingView = root.findViewById(R.id.noShopping);
-        mNoShoppingIcon = (ImageView) root.findViewById(R.id.im_noShoppingIcon);
+       // mNoShoppingIcon = (ImageView) root.findViewById(R.id.im_noShoppingIcon);
         mNoShoppingMainView = (TextView) root.findViewById(R.id.tv_noShoppingMain);
         mNoShoppingAddView = (TextView) root.findViewById(R.id.tv_noShoppingAdd);
         mNoShoppingAddView.setOnClickListener(new View.OnClickListener() {
@@ -146,18 +155,13 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
         mProductName = (TextView) root.findViewById(R.id.tv_product_name);
         mCode = (TextView) root.findViewById(R.id.tv_code);
 
-
-        //mSearchView = getActivity().findViewById(R.id.se)
-       // mSearchView.setOnQueryTextListener(this);
-
-        showProduct(mProduct);
+        mCarView = (CardView) root.findViewById(R.id.cv_product);
 
         // Set up floating action button
-        FloatingActionButton fab =
-                (FloatingActionButton) getActivity().findViewById(R.id.fab_add_purchase);
+        mFab = (FloatingActionButton) getActivity().findViewById(R.id.fab_add_purchase);
 
-        fab.setImageResource(R.drawable.ic_add);
-        fab.setOnClickListener(new View.OnClickListener() {
+        mFab.setImageResource(R.drawable.ic_add);
+        mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mPresenter.addNewPurchase();
@@ -172,6 +176,16 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
                 ContextCompat.getColor(getActivity(), R.color.colorAccent),
                 ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark)
         );
+
+
+        if (mProduct != null){
+            showProduct(mProduct);
+            mListView.setVisibility(View.GONE);
+        }else{
+            mCarView.setVisibility(View.GONE);
+            mFab.setVisibility(View.GONE);
+        }
+
         // Set the scrolling view in the custom SwipeRefreshLayout.
         swipeRefreshLayout.setScrollUpChild(mListView);
 
@@ -202,6 +216,8 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
 
     @Override
     public void setPresenter(ShoppingContract.Presenter presenter) {
+
+
         mPresenter = checkNotNull(presenter);
     }
 
@@ -250,11 +266,8 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
     @Override
     public void showPurchaseDetailsUi(String shoppingId) {
 
-
         Bundle bundle = new Bundle();
         bundle.putSerializable(EXTRA_PRODUCT_SHOPPING, mProduct );
-
-
 
         // in it's own Activity, since it makes more sense that way and it gives us the flexibility
         // to show some Intent stubbing.
@@ -323,6 +336,14 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
     @Override
     public void showSuccessfullySavedMessage() {
         showMessage(getString(R.string.successfully_saved_purchase_message));
+
+
+        showProduct(mProduct);
+        mListView.setVisibility(View.VISIBLE);
+
+        mCarView.setVisibility(View.GONE);
+        mFab.setVisibility(View.GONE);
+
     }
 
     @Override
@@ -350,7 +371,7 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
         mNoShoppingView.setVisibility(View.VISIBLE);
 
         mNoShoppingMainView.setText(mainText);
-        mNoShoppingIcon.setImageDrawable(getResources().getDrawable(iconRes));
+       // mNoShoppingIcon.setImageDrawable(getResources().getDrawable(iconRes));
         mNoShoppingAddView.setVisibility(showAddView ? View.VISIBLE : View.GONE);
     }
 
@@ -416,9 +437,6 @@ public class ShoppingFragment extends Fragment implements ShoppingContract.View 
                     .fit().centerCrop()
                     .placeholder(R.mipmap.ic_launcher)
                     .into(imageView);
-
-
-            //rowView.setBackgroundDrawable(viewGroup.getContext().getResources().getDrawable(R.drawable.list_completed_touch_feedback));
 
             rowView.setBackgroundDrawable(viewGroup.getContext()
                         .getResources().getDrawable(R.drawable.touch_feedback));

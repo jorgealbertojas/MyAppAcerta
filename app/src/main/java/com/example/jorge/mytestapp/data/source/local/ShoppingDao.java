@@ -57,5 +57,12 @@ public interface ShoppingDao {
     @Query("DELETE FROM Shopping")
     void deleteShopping();
 
+
+    /**
+     * Select a Purchase by id.
+     */
+    @Query("SELECT * FROM Shopping WHERE user = :user and productid = :productid")
+    Purchase getPurchaseByIdUser(String productid, String user);
+
 }
 

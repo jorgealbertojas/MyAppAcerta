@@ -5,6 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.content.res.XmlResourceParser;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 import com.example.jorge.mytestapp.R;
 import com.example.jorge.mytestapp.data.source.onLine.login.LoginServiceImpl;
 import com.example.jorge.mytestapp.data.source.onLine.login.model.Login;
+import com.example.jorge.mytestapp.products.ProductActivity;
 import com.example.jorge.mytestapp.util.CustomToast;
 import com.example.jorge.mytestapp.util.Util;
 import static android.content.Context.MODE_PRIVATE;
@@ -106,6 +108,10 @@ public class SignUpFragment extends Fragment implements OnClickListener, LoginCo
                     login.setPassoword2(mGetConfirmPassword);
 
                     mActionsListener.loadingLogin(login);
+
+                    Intent intent = new Intent(getActivity(), ProductActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
                 break;
 

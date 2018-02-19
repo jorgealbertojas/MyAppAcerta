@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent" >
+        android:background="@color/colorPrimary" >
 
         <ImageView
             android:id="@+id/im_close_activity"
@@ -20,7 +20,7 @@
             android:layout_margin="4dp"
             android:contentDescription="@string/closebutton"
             android:padding="5dp"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/ic_shopping" />
 
         <FrameLayout
             android:id="@+id/fl_frameContainer"

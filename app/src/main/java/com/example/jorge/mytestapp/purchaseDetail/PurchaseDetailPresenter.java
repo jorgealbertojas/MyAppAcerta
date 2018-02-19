@@ -3,6 +3,7 @@ package com.example.jorge.mytestapp.purchaseDetail;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.example.jorge.mytestapp.R;
 import com.example.jorge.mytestapp.data.Purchase;
 import com.example.jorge.mytestapp.data.source.ShoppingDataSource;
 import com.example.jorge.mytestapp.data.source.ShoppingRepository;
@@ -127,6 +128,8 @@ public class PurchaseDetailPresenter implements PurchaseDetailContract.Presenter
     private void showPurchase(@NonNull Purchase purchase) {
         String name = purchase.getNameProduct();
         String quantity = purchase.getQuantity();
+        String url = purchase.getImage();
+        String code = purchase.getProductId();
 
         if (Strings.isNullOrEmpty(name)) {
             mPurchaseDetailView.hideName();
@@ -138,6 +141,18 @@ public class PurchaseDetailPresenter implements PurchaseDetailContract.Presenter
             mPurchaseDetailView.hideQuantity();
         } else {
             mPurchaseDetailView.showQuantity(quantity);
+        }
+
+        if (Strings.isNullOrEmpty(code)) {
+            mPurchaseDetailView.hideProductId();
+        } else {
+            mPurchaseDetailView.showProductId(code);
+        }
+
+        if (Strings.isNullOrEmpty(url)) {
+            mPurchaseDetailView.hideUrl();
+        } else {
+            mPurchaseDetailView.showUrl(url);
         }
         mPurchaseDetailView.showCompletionStatus(purchase.isCompleted());
     }

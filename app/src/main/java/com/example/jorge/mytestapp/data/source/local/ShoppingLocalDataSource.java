@@ -108,6 +108,8 @@ public class ShoppingLocalDataSource implements ShoppingDataSource {
                                         @Override
                                         public void run() {
                                                 if (purchase != null) {
+
+
                                                         callback.onPurchaseLoaded(purchase);
                                                 } else {
                                                         callback.onDataNotAvailable();
@@ -126,7 +128,22 @@ public class ShoppingLocalDataSource implements ShoppingDataSource {
                 Runnable saveRunnable = new Runnable() {
                         @Override
                         public void run() {
-                                mShoppingDao.insertPurchase(purchase);
+                                Purchase purchaseNew = mShoppingDao.getPurchaseByIdUser(purchase.getProductId(),purchase.getUser());
+                                if (purchaseNew == null) {
+                                        mShoppingDao.insertPurchase(purchase);
+                                }else{
+                                        String quantity1 = purchase.getQuantity();
+                                        String quantity2 = purchaseNew.getQuantity();
+
+                                        if (quantity1.equals("")){
+                                                quantity1 = "1";
+                                        }
+
+                                        Integer contTotal = Integer.parseInt(quantity1) + Integer.parseInt(quantity2);
+                                        String valueFinal = Integer.toString(contTotal);
+
+                                        mShoppingDao.updateQuantity(purchaseNew.getId(), valueFinal);
+                                }
                         }
                 };
                 mAppExecutors.diskIO().execute(saveRunnable);
@@ -139,7 +156,11 @@ public class ShoppingLocalDataSource implements ShoppingDataSource {
                 Runnable activateRunnable = new Runnable() {
                         @Override
                         public void run() {
-                                mShoppingDao.updateQuantity(shoppingId, quantity);
+                                String newQuantity = "1";
+                                if (!quantity.equals("")){
+                                        newQuantity  =   quantity;
+                                }
+                                mShoppingDao.updateQuantity(shoppingId, newQuantity);
                         }
                 };
                 mAppExecutors.diskIO().execute(activateRunnable);

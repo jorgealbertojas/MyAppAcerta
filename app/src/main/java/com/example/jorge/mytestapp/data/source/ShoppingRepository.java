@@ -54,8 +54,6 @@ public class ShoppingRepository implements ShoppingDataSource{
     public void getFind(@NonNull final FindShoppingCallback callback, final String partName) {
         checkNotNull(callback);
 
-
-
         if (true) {
             // Query the local storage if available. If not, query the network.
             mShoppingLocalDataSource.getFind(new FindShoppingCallback() {
@@ -74,23 +72,20 @@ public class ShoppingRepository implements ShoppingDataSource{
         }
     }
 
-
-
-
     @Override
     public void getShopping(@NonNull final LoadShoppingCallback callback) {
         checkNotNull(callback);
 
         // Respond immediately with cache if available and not dirty
-        if (mCachedShopping != null && !mCacheIsDirty) {
-            callback.onShoppingLoaded(new ArrayList<>(mCachedShopping.values()));
-            return;
-        }
+        //if (mCachedShopping != null && !mCacheIsDirty) {
+        //    callback.onShoppingLoaded(new ArrayList<>(mCachedShopping.values()));
+        //    return;
+        //}
 
-        if (mCacheIsDirty) {
+       // if (mCacheIsDirty) {
             // If the cache is dirty we need to fetch new data from the network.
-            getShoppingFromRemoteDataSource(callback);
-        } else {
+       //     getShoppingFromRemoteDataSource(callback);
+       // } else {
             // Query the local storage if available. If not, query the network.
             mShoppingLocalDataSource.getShopping(new LoadShoppingCallback() {
 
@@ -105,7 +100,7 @@ public class ShoppingRepository implements ShoppingDataSource{
                     getShoppingFromRemoteDataSource(callback);
                 }
             });
-        }
+        //}
     }
 
     @Override
@@ -113,13 +108,13 @@ public class ShoppingRepository implements ShoppingDataSource{
         checkNotNull(shoppingId);
         checkNotNull(callback);
 
-        Purchase cachedPurchase = getPurchaseWithId(shoppingId);
+        final Purchase cachedPurchase = getPurchaseWithId(shoppingId);
 
         // Respond immediately with cache if available
-        if (cachedPurchase != null) {
-            callback.onPurchaseLoaded(cachedPurchase);
-            return;
-        }
+       // if (cachedPurchase != null) {
+       //     callback.onPurchaseLoaded(cachedPurchase);
+      //      return;
+      //  }
 
         // Load from server/persisted if needed.
 
@@ -131,8 +126,8 @@ public class ShoppingRepository implements ShoppingDataSource{
                 if (mCachedShopping == null) {
                     mCachedShopping = new LinkedHashMap<>();
                 }
-                mCachedShopping.put(purchase.getId(), purchase);
-                callback.onPurchaseLoaded(purchase);
+                mCachedShopping.put(purchase.getId(), cachedPurchase);
+                callback.onPurchaseLoaded(cachedPurchase);
             }
 
             @Override
@@ -174,6 +169,9 @@ public class ShoppingRepository implements ShoppingDataSource{
     public void activatePurchase(@NonNull String productId, String quantity) {
         checkNotNull(productId);
         activatePurchase(getPurchaseWithId(productId),quantity);
+
+        Purchase purchase =getPurchaseWithId(productId);
+        mShoppingLocalDataSource.activatePurchase(purchase.getId(),quantity);
     }
 
 
@@ -235,8 +233,9 @@ public class ShoppingRepository implements ShoppingDataSource{
     }
 
     @Override
-    public void completePurchase(@NonNull String productId) {
-
+    public void completePurchase(@NonNull String shoppingID) {
+        checkNotNull(shoppingID);
+        completePurchase(shoppingID);
     }
 
     private void getShoppingFromRemoteDataSource(@NonNull final LoadShoppingCallback callback) {
@@ -281,8 +280,6 @@ public class ShoppingRepository implements ShoppingDataSource{
             mCachedShopping = new LinkedHashMap<>();
         }
 
-
-
         mCachedShopping.clear();
         for (Purchase purchase : purchaseList) {
             mCachedShopping.put(purchase.getId(), purchase);
@@ -294,13 +291,11 @@ public class ShoppingRepository implements ShoppingDataSource{
         if (mCachedShopping == null) {
             mCachedShopping = new LinkedHashMap<>();
         }
-
-
         // For Test
-        //mCachedShopping.clear();
-        //for (Purchase purchase : purchaseList) {
-        //    mCachedShopping.put(purchase.getId(), purchase);
-        //}
+        mCachedShopping.clear();
+        for (Purchase purchase : purchaseList) {
+            mCachedShopping.put(purchase.getId(), purchase);
+        }
         mCacheIsDirty = false;
     }
 
@@ -316,10 +311,10 @@ public class ShoppingRepository implements ShoppingDataSource{
 
     private void refreshLocalDataSource(List<Purchase> purchaseList) {
       // For Test
-      //  mShoppingLocalDataSource.deleteAllShopping();
-      //  for (Purchase purchase : purchaseList) {
-      //      mShoppingLocalDataSource.savePurchase1(purchase);
-      //  }
+        mShoppingLocalDataSource.deleteAllShopping();
+        for (Purchase purchase : purchaseList) {
+            mShoppingLocalDataSource.savePurchase(purchase);
+        }
     }
 
 

@@ -18,7 +18,7 @@ public interface ProductContract {
 
         void showProduct(List<Product> productList);
 
-        void showDetailUI (String productId);
+        void showAllShopping();
     }
 
     interface UserActionsListener {

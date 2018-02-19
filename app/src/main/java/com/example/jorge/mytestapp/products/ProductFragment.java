@@ -3,6 +3,7 @@ package com.example.jorge.mytestapp.products;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -36,6 +37,11 @@ public class ProductFragment extends Fragment implements ProductContract.View {
     private ProductContract.UserActionsListener mActionsListener;
 
     private ProductsAdapter mListAdapter;
+    private RecyclerView mRecyclerView;
+
+    private static Bundle mBundleRecyclerViewState;
+    private final String KEY_RECYCLER_STATE = "RECYCLER_VIEW_STATE";
+    private Parcelable mListState;
 
     public ProductFragment() {
     }
@@ -61,14 +67,17 @@ public class ProductFragment extends Fragment implements ProductContract.View {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
+
         View root = inflater.inflate(R.layout.products_fragment, container, false);
-        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.rv_products_list);
-        recyclerView.setAdapter(mListAdapter);
 
-        int numColumns = 1;
-
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), numColumns));
+        ImageView shopping  = (ImageView) root.findViewById(R.id.iv_shopping);
+        shopping.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                showAllShopping();
+            }
+        });
 
         SwipeRefreshLayout swipeRefreshLayout =
                 (SwipeRefreshLayout) root.findViewById(R.id.refresh_layout);
@@ -83,6 +92,20 @@ public class ProductFragment extends Fragment implements ProductContract.View {
                 mActionsListener.loadingProduct();
             }
         });
+
+
+        if (savedInstanceState== null){
+            initRecyclerView(root);
+            mBundleRecyclerViewState = new Bundle();
+            Parcelable listState = mRecyclerView.getLayoutManager().onSaveInstanceState();
+            mBundleRecyclerViewState.putParcelable(KEY_RECYCLER_STATE, listState);
+        }else{
+            initRecyclerView(root);
+            mListState = mBundleRecyclerViewState.getParcelable(KEY_RECYCLER_STATE);
+            mRecyclerView.getLayoutManager().onRestoreInstanceState(mListState);
+        }
+
+
         return root;
     }
 
@@ -119,10 +142,26 @@ public class ProductFragment extends Fragment implements ProductContract.View {
     }
 
     @Override
-    public void showDetailUI(String productId) {
+    public void showAllShopping() {
 
+        Intent intent = new Intent(getActivity(), ShoppingActivity.class);
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(EXTRA_PRODUCT, null);
+
+        intent.putExtra(EXTRA_BUNDLE_PRODUCT, bundle);
+        startActivity(intent);
     }
 
+    private void initRecyclerView(View root){
+        mRecyclerView= (RecyclerView) root.findViewById(R.id.rv_products_list);
+        mRecyclerView.setAdapter(mListAdapter);
+
+        int numColumns = 1;
+
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), numColumns));
+    }
 
     private static class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHolder> {
 

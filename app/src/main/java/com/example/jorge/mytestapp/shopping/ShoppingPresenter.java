@@ -60,10 +60,10 @@ public class ShoppingPresenter implements ShoppingContract.Presenter {
 
     private void loadShopping(boolean forceUpdate, final boolean showLoadingUI) {
         if (showLoadingUI) {
-            mShoppingView.setLoadingIndicator(true);
+        //    mShoppingView.setLoadingIndicator(true);
         }
         if (forceUpdate) {
-            mShoppingRepository.refreshShopping();
+        //    mShoppingRepository.refreshShopping();
         }
 
         // The network request might be handled in a different thread so make sure Espresso knows
@@ -92,7 +92,8 @@ public class ShoppingPresenter implements ShoppingContract.Presenter {
                 if (!mShoppingView.isActive()) {
                     return;
                 }
-                if (showLoadingUI) {
+                //if (showLoadingUI) {
+                if (true) {
                     mShoppingView.setLoadingIndicator(false);
                 }
 
